@@ -1,0 +1,16 @@
+
+1. ライブラリのエクスポート
+poetry export -f requirements.txt -o requirements.txt
+
+2. モジュールをローカルに出力
+pip install -r requirements.txt -t module
+
+3. ファイル配備
+
+エントリーのたぐい
+C:\ProgramData\Blackmagic Design\DaVinci Resolve\Fusion\Scripts\Utility
+
+DaVinciPsdtools
+C:\ProgramData\Blackmagic Design\DaVinci Resolve\Fusion\Modules
+
+GPLライセンス必須

@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "davinciresolve-psdtools"
+version = "0.1.0"
+description = "psdtoo"
+authors = ["NUROKU"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "davinciresolve_psdtools"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+psd-tools = "^1.9.23"
+pillow = "^9.4.0"
+ttkwidgets = "^0.13.0"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.2.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

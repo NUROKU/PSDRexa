@@ -3,7 +3,7 @@
 /venv
 /module
 /packages
-
+/Release
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

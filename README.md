@@ -27,6 +27,10 @@ C:\ProgramData\Blackmagic Design\DaVinci Resolve\Fusion\Scripts\Utility
 
 インストールに成功した場合、ワークスペース→スクリプトからPSDCharacterExporterが選択できるようになっています
 
+# 実行してからやること
+
+設定画面で画像ファイルの出力先を選んでおいてください。他のは特にいじらなくて問題ないです
+
 # ライセンス
 このプロジェクトは、GNU General Public License v3.0 (GPL-3.0) ライセンスの下でライセンスされています。
 

@@ -3,7 +3,7 @@ name = "davinciresolve-psdtools"
 version = "0.1.0"
 description = "psdtoo"
 authors = ["NUROKU"]
-license = "MIT"
+license = "GPL 3.0"
 readme = "README.md"
 packages = [{include = "davinciresolve_psdtools"}]
 

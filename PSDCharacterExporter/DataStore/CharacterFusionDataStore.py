@@ -3,7 +3,8 @@ from pathlib import Path
 from Exception.DataStoreError import DataStoreError
 from Service.ResolveService import ResolveService
 
-# 未使用・・・一旦没・・・
+# Fusionを作成してそこに画像をロードさせるやつ
+# InsertFusionCompositionIntoTimelineの挙動が気に入らなくて一旦没
 class CharacterFusionDataStore:
     def __init__(self):
         # self._resolve = ResolveService.get_resolve()

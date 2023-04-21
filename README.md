@@ -15,17 +15,46 @@ PythonはインストールしてDaVinciResolve上で使えるようにしてお
 
 # 対応OS
 - Windows  
-- Mac/Linux(動作未確認)
+- Mac(動作未確認)
 
 # インストール方法
-ダウンロードしたzipファイルを解凍し、それぞれ以下のフォルダ配下に配備してください。フォルダが無い場合は作ってください
+ダウンロードしたzipファイルを解凍し、適切なフォルダに配備してください。
 
-- PSDCharacterExporter（フォルダ）  
-C:\ProgramData\Blackmagic Design\DaVinci Resolve\Fusion\Modules
-- PSDCharacterExporter.py  
-C:\ProgramData\Blackmagic Design\DaVinci Resolve\Fusion\Scripts\Utility  
+# インストール手順
+ダウンロードしたzipファイルを解凍し、適切なフォルダに配置してください。
+
+Windows向け：
+1. PSDCharacterExporter（フォルダ）  
+   配置先：C:\ProgramData\Blackmagic Design\DaVinci Resolve\Fusion\Modules
+2. PSDCharacterExporter.py  
+   配置先：C:\ProgramData\Blackmagic Design\DaVinci Resolve\Fusion\Scripts\Utility
+
+Mac向け：
+1. PSDCharacterExporter（フォルダ）  
+   配置先：/Library/Application Support/Blackmagic Design/DaVinci Resolve/Fusion/Modules
+2. PSDCharacterExporter.py  
+   配置先：/Library/Application Support/Blackmagic Design/DaVinci Resolve/Fusion/Scripts/Utility
 
 インストールに成功した場合、ワークスペース→スクリプトからPSDCharacterExporterが選択できるようになっています
+
+------------------------------
+
+※DaVinci Resolveを特定のユーザーフォルダ配下にインストールしていた場合、{ユーザ名}をインストール先のユーザ名に置き換えた上で以下のフォルダに配置してください。
+
+Windows向け：
+1. PSDCharacterExporter（フォルダ）  
+   配置先：C:\Users\{ユーザ名}\AppData\Local\Blackmagic Design\DaVinci Resolve\Fusion\Modules
+2. PSDCharacterExporter.py  
+   配置先：C:\Users\{ユーザ名}\AppData\Local\Blackmagic Design\DaVinci Resolve\Fusion\Scripts\Utility
+
+Mac向け：
+1. PSDCharacterExporter（フォルダ）  
+   配置先：/Users/{ユーザ名}/Library/Application Support/Blackmagic Design/DaVinci Resolve/Fusion/Modules
+2. PSDCharacterExporter.py  
+   配置先：/Users/{ユーザ名}/Library/Application Support/Blackmagic Design/DaVinci Resolve/Fusion/Scripts/Utility
+
+
+
 
 # ライセンス
 このプロジェクトは、GNU General Public License v3.0 (GPL-3.0) ライセンスの下でライセンスされています。

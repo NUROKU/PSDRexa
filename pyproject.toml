@@ -1,17 +1,17 @@
 [tool.poetry]
-name = "davinciresolve-psdtools"
+name = "davinciresolve-PsdCharacterExporter"
 version = "0.1.0"
-description = "psdtoo"
+description = "davinciresolve-PsdCharacterExporter"
 authors = ["NUROKU"]
 license = "GPL 3.0"
 readme = "README.md"
-packages = [{include = "davinciresolve_psdtools"}]
+packages = [{include = "davinciresolve-PsdCharacterExporter"}]
 
 [tool.poetry.dependencies]
 python = "^3.9"
 psd-tools = "^1.9.23"
-pillow = "^9.4.0"
 ttkwidgets = "^0.13.0"
+pillow = "^9.5.0"
 
 
 [tool.poetry.group.dev.dependencies]

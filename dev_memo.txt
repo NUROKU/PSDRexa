@@ -13,4 +13,7 @@ C:\ProgramData\Blackmagic Design\DaVinci Resolve\Fusion\Scripts\Utility
 DaVinciPsdtools
 C:\ProgramData\Blackmagic Design\DaVinci Resolve\Fusion\Modules
 
+https://pypi.org/project/Pillow/#files
+
+
 GPLライセンス必須

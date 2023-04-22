@@ -13,9 +13,9 @@ psd-tools = "^1.9.23"
 ttkwidgets = "^0.13.0"
 pillow = "^9.5.0"
 
-
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.2.1"
+
 
 [build-system]
 requires = ["poetry-core"]

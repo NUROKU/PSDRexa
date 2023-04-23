@@ -9,9 +9,10 @@ PSD立ち絵素材をいい感じに画像出力するやつ
 
 # 必要動作環境
 - DaVinci Resolve 18  
-- Python 3.9
+- Python 3.9  
 PythonはインストールしてDaVinciResolve上で使えるようにしておいてください  
-ワークスペース→コンソール→Py3を選択してエラーメッセージが出力されなければ使える環境になってます。
+ワークスペース→コンソール→Py3を選択してエラーメッセージが出力されなければ使える環境になってます。  
+[Python3.9のインストールはここから](https://www.python.org/downloads/release/python-3913/)
 
 # 対応OS
 - Windows  

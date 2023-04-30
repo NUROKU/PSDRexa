@@ -48,7 +48,7 @@ class LayerTreeview(CheckboxTreeview):
         self._layer_list_presenter = LayerListPresenter()
 
         try:
-            file_path = Path(filedialog.askopenfilename(filetypes=[('psdファイル', '*.psd')]))
+            file_path = Path(filedialog.askopenfilename(title="PSDファイルを選択してください",filetypes=[('psdファイル', '*.psd')]))
             tree_list = self._layer_list_presenter.get_layer_list(file_path)
 
             for tree_item in tree_list:

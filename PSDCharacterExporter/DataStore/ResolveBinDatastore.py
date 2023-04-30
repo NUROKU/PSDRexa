@@ -55,6 +55,7 @@ class ResolveBinDatastore:
     #    return image_list
 
     def add_image_to_bin(self, image_path: Path):
+        # timelineへのimage追加もしちゃってるの単純に命名詐欺では？
 
         media_storage = ResolveService.get_resolve().GetMediaStorage()
         item = media_storage.AddItemListToMediaPool(str(image_path))

@@ -1,6 +1,6 @@
 import tkinter
 import tkinter as tk
-from tkinter import filedialog
+from tkinter import filedialog, messagebox
 
 from Service.SettingFileService import SettingKeys, SettingFileService
 
@@ -34,7 +34,9 @@ class SettingWindow:
                 SettingKeys.use_psdtool_func: checkbox_var_3.get()
             }
             SettingFileService.update_and_save_configs(config_dict)
-            save_state_label.config(text="Save Done!")
+            messagebox.showinfo("Info", "設定が保存されました。アプリケーションを終了します。")
+            # save_state_label.config(text="Save Done!")
+            dlg_modal.quit()
 
         def exit():
             save_settings()
@@ -103,7 +105,7 @@ class SettingWindow:
 
         # Button
         frame4 = tk.Frame(dlg_modal)
-        save_button = tk.Button(frame4, text="Save", command=save_settings)
+        save_button = tk.Button(frame4, text="Save_and_Exit", command=save_settings)
         save_button.pack(side="left")
         exit_button = tk.Button(frame4, text="Exit", command=exit)
         exit_button.pack(side="left")

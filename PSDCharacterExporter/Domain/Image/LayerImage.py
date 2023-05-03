@@ -6,8 +6,9 @@ logger = Logger.get_logger(__name__)
 
 
 class LayerImage:
-    def __init__(self, image: Image, preview_ratio: float):
+    def __init__(self, image: Image, preview_ratio: float, opacity: int):
         self._image = image
+        self._opacity = opacity
         if self._image is None:
             pil_img = Image.new("RGBA", (1, 1), (255, 255, 255, 0))
             self._image = pil_img
@@ -22,6 +23,10 @@ class LayerImage:
     @property
     def previewed_image(self):
         return self._previewed_image
+
+    @property
+    def opacity(self):
+        return self._opacity
 
     def resized_image(self, size_width: int, size_height: int) -> Image:
         if size_width <= 0 or size_height <= 0:

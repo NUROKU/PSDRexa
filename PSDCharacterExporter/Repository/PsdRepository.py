@@ -1,5 +1,6 @@
 from pathlib import Path
 
+from PIL import Image
 from psd_tools.api import layers
 
 from Common import Logger
@@ -40,18 +41,18 @@ class PsdRepository:
                         SettingFileService.read_config(SettingKeys.image_preview_size_y) / psd_file.size[1])
 
             for layer in psdtool_layer_list:
-                logger.debug(f"psd: {layer} size: {layer.size}")
+                logger.debug(f"psd: {layer} size: {layer.size} opacity: {layer.opacity}")
                 # if ":flip" in layer.name:
                 #     continue
 
                 if layer.is_group():
                     group = define_group_domain(layer, domain_layer_list)
                     domain_layer_list.append(group)
-                    logger.debug(group)
+                    # logger.debug(group)
                 else:
                     layer_obj = define_image_layer_domain(layer, domain_layer_list, ratio)
                     domain_layer_list.append(layer_obj)
-                    logger.debug(layer_obj)
+                    # logger.debug(layer_obj)
 
             add_childs_for_group(domain_layer_list)
 
@@ -107,9 +108,14 @@ def define_image_layer_domain(layer_obj, domain_layer_list, ratio):
         #         flip_layer_image = FlipLayerImage(FlipType.value_from_name(flip_layer.name), layer_image)
         #         flip_list.append(flip_layer_image)
 
+    img = layer_obj.topil()
+    if layer_obj.opacity != 255 and layer_obj.opacity != 0:
+        # 透明度調整
+        img = Image.new("RGBA", layer_obj.size, (255, 255, 255, 0))
+        img = Image.blend(img,layer_obj.topil(),layer_obj.opacity / 255)
     base_property = BaseLayerProperties(name=layer_obj.name, size=layer_obj.size, offset=layer_obj.offset,
                                         visible=layer_obj.is_visible(),
-                                        layer_image=LayerImage(layer_obj.topil(), preview_ratio=ratio))
+                                        layer_image=LayerImage(img, preview_ratio=ratio, opacity=layer_obj.opacity))
 
     if SettingFileService.read_config(SettingKeys.use_psdtool_func) is True:
         if layer_obj.name.startswith("*"):

@@ -1,6 +1,6 @@
 import tkinter
 import tkinter as tk
-from tkinter import filedialog, messagebox
+from tkinter import filedialog, messagebox, ttk
 
 from Service.SettingFileService import SettingKeys, SettingFileService
 
@@ -50,6 +50,10 @@ class SettingWindow:
         folder_path_label.pack(side="left")
         frame1.pack(side="top", anchor=tk.W)
 
+        sep1 = ttk.Separator(dlg_modal)
+        sep1.pack(fill="both")
+
+
         ### image_size
         checkbox_var = tk.BooleanVar(value=SettingFileService.read_config(SettingKeys.is_image_size_original))
         checkbox = tk.Checkbutton(dlg_modal, text="基ファイルのサイズで画像出力", variable=checkbox_var)
@@ -72,6 +76,9 @@ class SettingWindow:
                                          value=SettingFileService.read_config(SettingKeys.image_output_size_y)))
         number2_spinbox.pack(side="left", anchor=tk.W)
         image_size_frame1.pack(side="top", anchor=tk.W)
+
+        sep2 = ttk.Separator(dlg_modal)
+        sep2.pack(fill="both")
 
         ### preview_image_size
         checkbox_var_2 = tk.BooleanVar(value=SettingFileService.read_config(SettingKeys.is_image_preview_size_original))
@@ -98,6 +105,8 @@ class SettingWindow:
         # image_size_frame2.pack(side="top", anchor=tk.W)
         image_size_frame2.pack(side="top", anchor=tk.W)
 
+        sep3 = ttk.Separator(dlg_modal)
+        sep3.pack(fill="both")
         #
         checkbox_var_3 = tk.BooleanVar(value=SettingFileService.read_config(SettingKeys.use_psdtool_func))
         checkbox_3 = tk.Checkbutton(dlg_modal, text="psdtoolkitの機能(*や!の変換)を使用", variable=checkbox_var_3)

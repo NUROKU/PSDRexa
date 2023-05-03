@@ -47,7 +47,7 @@ class SettingFileService:
         config[key.value] = value
         SettingFileService.config_dict = config
         with open(SettingFileService.json_path, 'w') as f:
-            json.dump(SettingFileService.config_dict, f)
+            json.dump(SettingFileService.config_dict, f, indent=2)
 
     @staticmethod
     def update_and_save_configs(config_dict: dict):

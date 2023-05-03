@@ -16,7 +16,8 @@ PythonはインストールしてDaVinciResolve上で使えるようにしてお
 
 # 対応OS
 - Windows  
-- Mac(動作未確認)
+- Mac  
+Macでうまく動かない場合、セキュリティが悪さをしている場合があります。もしくはバグ
 
 # インストール方法
 ダウンロードしたzipファイルを解凍し、適切なフォルダに配備してください。
@@ -53,9 +54,6 @@ Mac向け：
    配置先：/Users/{ユーザ名}/Library/Application Support/Blackmagic Design/DaVinci Resolve/Fusion/Modules
 2. PSDCharacterExporter.py  
    配置先：/Users/{ユーザ名}/Library/Application Support/Blackmagic Design/DaVinci Resolve/Fusion/Scripts/Utility
-
-
-
 
 # ライセンス
 このプロジェクトは、GNU General Public License v3.0 (GPL-3.0) ライセンスの下でライセンスされています。

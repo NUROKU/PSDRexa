@@ -54,21 +54,15 @@ class CompositedImage:
 
         for layer in top_group_layer.image_layer_list:
             if layer.is_visible:
-                if is_for_preview and SettingFileService.read_config(SettingKeys.is_image_preview_size_original):
-                    # 透過を考慮したちゃんとしたやつ
-                    # c = Image.new('RGBA', composited_image.size, (255, 255, 255, 0))
-                    # c.paste(layer.layer_image.image, layer.offset, layer.layer_image.image)
-                    # composited_image = Image.alpha_composite(composited_image, c)
-                    composited_image.paste(layer.layer_image.image, layer.offset,
-                                           layer.layer_image.image)
-                    # composited_image = Image.blend(composited_image, c)
-                else:
+                if is_for_preview and SettingFileService.read_config(SettingKeys.is_image_preview_size_original) is False:
                     resized_offset = (int(layer.offset[0] * self._ratio), int(layer.offset[1] * self._ratio))
-                    # c = Image.new('RGBA', self._layer_image_size, (255, 255, 255, 0))
-                    # c.paste(layer.layer_image.previewed_image, resized_offset, layer.layer_image.previewed_image)
-                    # composited_image = Image.alpha_composite(composited_image, c)
-                    composited_image.paste(layer.layer_image.previewed_image, resized_offset,
-                                           layer.layer_image.previewed_image)
 
+                    c = Image.new('RGBA', self._layer_image_size, (255, 255, 255, 0))
+                    c.paste(layer.layer_image.previewed_image,resized_offset)
+                    composited_image = Image.alpha_composite(composited_image, c)
+                else:
+                    c = Image.new('RGBA', self._layer_image_size, (255, 255, 255, 0))
+                    c.paste(layer.layer_image.image,layer.offset)
+                    composited_image = Image.alpha_composite(composited_image, c)
 
         return composited_image

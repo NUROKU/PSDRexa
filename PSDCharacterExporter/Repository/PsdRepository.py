@@ -111,8 +111,8 @@ def define_image_layer_domain(layer_obj, domain_layer_list, ratio):
     img = layer_obj.topil()
     if layer_obj.opacity != 255 and layer_obj.opacity != 0:
         # 透明度調整
-        img = Image.new("RGBA", layer_obj.size, (255, 255, 255, 0))
-        img = Image.blend(img,layer_obj.topil(),layer_obj.opacity / 255)
+        back_img = Image.new("RGBA", layer_obj.size, (255, 255, 255, 0))
+        img = Image.blend(back_img,layer_obj.topil(),layer_obj.opacity / 255)
     base_property = BaseLayerProperties(name=layer_obj.name, size=layer_obj.size, offset=layer_obj.offset,
                                         visible=layer_obj.is_visible(),
                                         layer_image=LayerImage(img, preview_ratio=ratio, opacity=layer_obj.opacity))

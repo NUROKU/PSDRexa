@@ -15,5 +15,9 @@ C:\ProgramData\Blackmagic Design\DaVinci Resolve\Fusion\Modules
 
 https://pypi.org/project/Pillow/#files
 
+PYTHONHOME
+
+C:\Users\shimau6\AppData\Local\Programs\Python\Python39\
+
 
 GPLライセンス必須

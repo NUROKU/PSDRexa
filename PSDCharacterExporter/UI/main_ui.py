@@ -53,11 +53,11 @@ class MainUI:
         directory_label.pack(side="left", padx=5, pady=5, anchor=tk.W)
         settings_frame1.pack(side="top", anchor=tk.W)
 
-        # 右半分にチェックボックス付きのツリーを配置
-        canvas = CompositedImageCanvas(root, width=400, height=300)
+        # 右半分立ち絵
+        canvas = CompositedImageCanvas(root, width=600, height=300)
         canvas.pack(side="right", fill="both", expand=True)
 
-        # 左半分
+        # 左半分チェックボックス付きのツリーを配置
         tree = LayerTreeview(root, canvas=canvas, show='tree')
         tree.pack(fill="both", expand=True)
 

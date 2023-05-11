@@ -13,13 +13,16 @@ class OneSelectImageLayer(ImageLayer):
 
     def selected_on(self):
         # 同じグループの他のImageLayerを全部OFFにする
+        if self.parent is not None and self.parent.is_visible is False:
+            self.parent.selected_on()
+
+        if self.parent is not None and self.parent.is_visible is False:
+            return
+
         self.set_visible(True)
         for layer in self.parent.child_layers:
             if layer is not self and isinstance(layer, (OneSelectImageLayer, type(self))):
                 layer.selected_off()
-
-        if self.parent is not None and self.parent.is_visible is False:
-            self.parent.selected_on()
 
     def selected_off(self):
         self.set_visible(False)

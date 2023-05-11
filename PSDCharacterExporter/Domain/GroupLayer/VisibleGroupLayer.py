@@ -8,6 +8,9 @@ class VisibleGroupLayer(GroupLayer):
 
     def selected_on(self):
         if self.parent is not None and self.parent.is_visible is False:
+            self.parent.selected_on()
+
+        if self.parent is not None and self.parent.is_visible is False:
             return
         self.set_visible(True)
         self.fix_child_layer_check_selected_on()
@@ -16,9 +19,6 @@ class VisibleGroupLayer(GroupLayer):
         if self.parent is not None and self.parent.is_visible is False:
             self.set_visible(False)
             self.fix_child_layer_check_selected_off()
-        else:
-            self.set_visible(True)
-            self.fix_child_layer_check_selected_on()
 
     @property
     def layer_type_name(self):

@@ -7,6 +7,12 @@ class OneSelectGroupLayer(GroupLayer):
         super().__init__(base_properties, parent_group)
 
     def selected_on(self):
+        if self.parent is not None and self.parent.is_visible is False:
+            self.parent.selected_on()
+
+        if self.parent is not None and self.parent.is_visible is False:
+            return
+
         self.set_visible(True)
         for layer in self.parent.child_layers:
             if layer is not self and isinstance(layer, (OneSelectGroupLayer, type(self))):

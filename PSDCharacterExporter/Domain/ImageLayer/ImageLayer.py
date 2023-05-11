@@ -13,6 +13,12 @@ class ImageLayer(Layer):
         return self._parent_group
 
     def selected_on(self):
+        if self.parent is not None and self.parent.is_visible is False:
+            self.parent.selected_on()
+
+        if self.parent is not None and self.parent.is_visible is False:
+            return
+
         self.set_visible(True)
 
         if self.parent is not None and self.parent.is_visible is False:

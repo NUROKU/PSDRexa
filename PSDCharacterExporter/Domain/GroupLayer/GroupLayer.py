@@ -36,6 +36,12 @@ class GroupLayer(Layer):
         return "GroupLayer"
 
     def selected_on(self):
+        if self.parent is not None and self.parent.is_visible is False:
+            self.parent.selected_on()
+
+        if self.parent is not None and self.parent.is_visible is False:
+            return
+
         self.set_visible(True)
         self.fix_child_layer_check_selected_on()
 
@@ -44,8 +50,8 @@ class GroupLayer(Layer):
         self.fix_child_layer_check_selected_off()
 
     def fix_child_layer_check_selected_on(self):
-        if self._parent_group is not None and self._parent_group.is_visible is False:
-            self._parent_group.selected_on()
+        # if self._parent_group is not None and self._parent_group.is_visible is False:
+        #     self._parent_group.selected_on()
         # ↓のこれもうちょっと賢くできなかったの？
         for layer in self.child_layers:
             if layer.layer_type_name == "VisibleGroupLayer":
@@ -63,26 +69,3 @@ class GroupLayer(Layer):
     def fix_child_layer_check_selected_off(self):
         for layer in self.child_layers:
             layer.selected_off()
-
-    # def set_visible(self, visible: bool):
-    #     super().set_visible(visible)
-
-    # 全グループ共通だからここにおいてるけど、どうなんだろうね
-    # if visible:
-    #     if self._parent_group is not None and self._parent_group.is_visible is False:
-    #         self._parent_group.selected_on()
-    #     # ↓のこれもうちょっと賢くできなかったの？
-    #     for layer in self.child_layers:
-    #         if layer.layer_type_name == "VisibleGroupLayer":
-    #             layer.set_visible(True)
-#
-#     if len(self.child_image_layers) > 0:
-#         self.child_image_layers[len(self.child_image_layers) - 1].set_visible(True)
-#     else:
-#         self.child_group_layers[len(self.child_group_layers) - 1].set_visible(True)
-# else:
-#     for layer in self.child_image_layers:
-#         layer.set_visible(False)
-#     for group in self.child_group_layers:
-#         group.selected_off()
-#

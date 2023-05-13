@@ -21,11 +21,11 @@ class GroupLayer(Layer):
 
     @property
     def child_image_layers(self):
-        return [layer for layer in self._child_layers if isinstance(layer, ImageLayer)]
+        return [layer for layer in self._child_layers if layer.layer_type_name.endswith("ImageLayer")]
 
     @property
     def child_group_layers(self):
-        return [layer for layer in self._child_layers if isinstance(layer, GroupLayer)]
+        return [layer for layer in self._child_layers if layer.layer_type_name.endswith("GroupLayer")]
 
     @property
     def parent(self):
@@ -36,13 +36,6 @@ class GroupLayer(Layer):
         return "GroupLayer"
 
     def selected_on(self, child_affect: bool = True):
-        if self.is_visible is True:
-            return
-
-        if self.parent is not None and self.parent.is_visible is False:
-            self.parent.selected_on(child_affect=False)
-        if self.parent is not None and self.parent.is_visible is False:
-            return
         self.set_visible(True)
 
         if child_affect:
@@ -57,8 +50,9 @@ class GroupLayer(Layer):
             self.fix_child_layer_check_selected_off()
 
     def fix_child_layer_check_selected_on(self):
-        # if self._parent_group is not None and self._parent_group.is_visible is False:
-        #     self._parent_group.selected_on()
+        if self.parent is not None and self.parent.is_visible is False:
+            self.parent.selected_on()
+
         # ↓のこれもうちょっと賢くできなかったの？
         for layer in self.child_layers:
             if layer.layer_type_name == "VisibleGroupLayer":
@@ -67,6 +61,9 @@ class GroupLayer(Layer):
         for layer in self.child_layers:
             if layer.is_visible is True:
                 return
+
+        if len(self.child_group_layers) > 0:
+            self.child_group_layers[len(self.child_group_layers) - 1].selected_on()
 
         if len(self.child_image_layers) > 0:
             self.child_image_layers[len(self.child_image_layers) - 1].selected_on()

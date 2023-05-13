@@ -7,13 +7,13 @@ class OneSelectGroupLayer(GroupLayer):
         super().__init__(base_properties, parent_group)
 
     def selected_on(self, child_affect: bool = True):
-        if self.parent is not None and self.parent.is_visible is False:
-            self.parent.selected_on(child_affect=False)
-
         self.set_visible(True)
+
         for layer in self.parent.child_layers:
             if layer is not self and layer.layer_type_name.startswith("OneSelect"):
                 layer.selected_off()
+                if child_affect:
+                    layer.fix_child_layer_check_selected_off()
 
         if child_affect:
             self.fix_child_layer_check_selected_on()
@@ -28,6 +28,7 @@ class OneSelectGroupLayer(GroupLayer):
                         self.fix_child_layer_check_selected_off()
                     return
             self.set_visible(True)
+            return
 
         if child_affect:
             self.fix_child_layer_check_selected_off()

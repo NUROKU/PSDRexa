@@ -36,16 +36,20 @@ class GroupLayer(Layer):
         return "GroupLayer"
 
     def selected_on(self):
-        if self.parent is not None and self.parent.is_visible is False:
-            self.parent.selected_on()
-
-        if self.parent is not None and self.parent.is_visible is False:
+        if self.is_visible is True:
             return
 
+        if self.parent is not None and self.parent.is_visible is False:
+            self.parent.selected_on()
+        if self.parent is not None and self.parent.is_visible is False:
+            return
         self.set_visible(True)
         self.fix_child_layer_check_selected_on()
 
     def selected_off(self):
+        if self.is_visible is False:
+            return
+
         self.set_visible(False)
         self.fix_child_layer_check_selected_off()
 
@@ -60,11 +64,8 @@ class GroupLayer(Layer):
         for layer in self.child_layers:
             if layer.is_visible is True:
                 return
-
         if len(self.child_image_layers) > 0:
             self.child_image_layers[len(self.child_image_layers) - 1].selected_on()
-        else:
-            self.child_group_layers[len(self.child_group_layers) - 1].selected_on()
 
     def fix_child_layer_check_selected_off(self):
         for layer in self.child_layers:

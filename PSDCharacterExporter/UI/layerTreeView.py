@@ -1,4 +1,5 @@
 import os
+import time
 from pathlib import Path
 from tkinter import ttk, filedialog, messagebox
 
@@ -39,7 +40,8 @@ class LayerTreeview(CheckboxTreeview):
         self.tag_configure("checkbox_off", image=self.im_checkbox_off)
         self.tag_configure("radiobutton_on", image=self.im_radiobutton_on)
         self.tag_configure("radiobutton_off", image=self.im_radiobutton_off)
-        self.tag_configure("visible", image=self.im_visible)
+        self.tag_configure("visible_on", image=self.im_visible)
+        self.tag_configure("visible_off", image=self.im_visible)
 
         # check / uncheck boxes on click
         self.bind("<Button-1>", self._box_click, True)
@@ -59,16 +61,17 @@ class LayerTreeview(CheckboxTreeview):
                     elif tree_item[4] in ["OneSelectGroupLayer", "OneSelectImageLayer"]:
                         self.change_state(tree_item[1], 'radiobutton_on')
                     elif tree_item[4] == "VisibleGroupLayer":
-                        self.change_state(tree_item[1], 'visible')
+                        self.change_state(tree_item[1], 'visible_on')
                 else:
                     if tree_item[4] in ["GroupLayer", "ImageLayer"]:
                         self.change_state(tree_item[1], 'checkbox_off')
                     elif tree_item[4] in ["OneSelectGroupLayer", "OneSelectImageLayer"]:
                         self.change_state(tree_item[1], 'radiobutton_off')
                     elif tree_item[4] == "VisibleGroupLayer":
-                        self.change_state(tree_item[1], 'visible')
-
+                        self.change_state(tree_item[1], 'visible_off')
             self._check_visible_operation_presenter = CheckVisibleOperationPresenter([])
+            self._update_canvas()
+            # TODO まれに初回だけ立ち絵が欠けるから二回実行してる、どっか非同期なのかな
             self._update_canvas()
         except Exception as e:
             messagebox.showerror("error", f"{e.__str__()}アプリケーションを終了します。")
@@ -92,15 +95,19 @@ class LayerTreeview(CheckboxTreeview):
             self.change_state(item, "checkbox_on")
         elif self.tag_has("radiobutton_off", item):
             self.change_state(item, "radiobutton_on")
+        elif self.tag_has("radiobutton_off", item):
+            self.change_state(item, "visible_on")
 
     def _turn_off(self, item):
         if self.tag_has("checkbox_on", item):
             self.change_state(item, "checkbox_off")
         elif self.tag_has("radiobutton_on", item):
             self.change_state(item, "radiobutton_off")
+        elif self.tag_has("radiobutton_on", item):
+            self.change_state(item, "visible_off")
 
     def _is_turned_on(self, item) -> bool:
-        return self.tag_has("checkbox_on", item) or self.tag_has("radiobutton_on", item) or self.tag_has("visible",
+        return self.tag_has("checkbox_on", item) or self.tag_has("radiobutton_on", item) or self.tag_has("visible_on",
                                                                                                          item)
 
     def get_checked(self):
@@ -131,7 +138,7 @@ class LayerTreeview(CheckboxTreeview):
         :type state: str
         """
         tags = self.item(item, "tags")
-        states = ["checkbox_on", "checkbox_off", "radiobutton_on", "radiobutton_off", "visible"]
+        states = ["checkbox_on", "checkbox_off", "radiobutton_on", "radiobutton_off", "visible_on","visible_off"]
         new_tags = [t for t in tags if t not in states]
         new_tags.append(state)
         self.item(item, tags=tuple(new_tags))
@@ -155,13 +162,10 @@ class LayerTreeview(CheckboxTreeview):
                   state if no tag among
                   ('checked', 'unchecked', 'tristate') is given.
         """
-        if self.tag_has("radiobutton_on", parent):
-            tag = "radiobutton_on"
-        else:
-            tag = 'radiobutton_off'
+        tag="tmp"
         if "tags" not in kw:
             kw["tags"] = (tag,)
-        elif not (["checkbox_on", "checkbox_off", "radiobutton_on", "radiobutton_off", "visible"] in kw["tags"]):
+        elif not (["checkbox_on", "checkbox_off", "radiobutton_on", "radiobutton_off", "visible_on","visible_off"] in kw["tags"]):
             kw["tags"] += (tag,)
 
         return ttk.Treeview.insert(self, parent, index, iid, **kw)

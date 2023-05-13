@@ -12,7 +12,7 @@ class OneSelectGroupLayer(GroupLayer):
         for layer in self.parent.child_layers:
             if layer is not self and layer.layer_type_name.startswith("OneSelect"):
                 layer.selected_off()
-                if child_affect:
+                if child_affect and layer.layer_type_name.endswith("GroupLayer"):
                     layer.fix_child_layer_check_selected_off()
 
         if child_affect:

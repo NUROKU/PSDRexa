@@ -12,22 +12,20 @@ class OneSelectImageLayer(ImageLayer):
         super().__init__(base_properties, parent_group, flip_layer_images)
 
     def selected_on(self):
-        if self.parent is not None and self.parent.is_visible is False:
-            self.parent.selected_on()
-        if self.parent is not None and self.parent.is_visible is False:
-            return
         self.set_visible(True)
+        if self.parent is not None and self.parent.is_visible is False:
+            self.parent.selected_on(child_affect=False)
+
         # 同じグループの他のImageLayerを全部OFFにする
         for layer in self.parent.child_layers:
-            if layer is not self and isinstance(layer, (OneSelectImageLayer, type(self))):
+            if layer is not self and layer.layer_type_name.startswith("OneSelect"):
                 layer.selected_off()
 
     def selected_off(self):
-
         self.set_visible(False)
         if self.parent is not None and self.parent.is_visible is True:
             for layer in self.parent.child_layers:
-                if layer.is_visible is True and isinstance(layer, (OneSelectImageLayer, type(self))):
+                if layer.is_visible is True and layer.layer_type_name.startswith("OneSelect"):
                     return
             self.selected_on()
 

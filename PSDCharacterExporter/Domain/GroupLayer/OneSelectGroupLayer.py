@@ -7,9 +7,6 @@ class OneSelectGroupLayer(GroupLayer):
         super().__init__(base_properties, parent_group)
 
     def selected_on(self):
-        if self.is_visible is True:
-            return
-
         if self.parent is not None and self.parent.is_visible is False:
             self.parent.selected_on()
 
@@ -23,9 +20,6 @@ class OneSelectGroupLayer(GroupLayer):
         self.fix_child_layer_check_selected_on()
 
     def selected_off(self):
-        if self.is_visible is False:
-            return
-
         self.set_visible(False)
         if self.parent is not None and self.parent.is_visible is True:
             for layer in self.parent.child_layers:

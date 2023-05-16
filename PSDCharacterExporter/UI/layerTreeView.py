@@ -41,7 +41,7 @@ class LayerTreeview(CheckboxTreeview):
         self.tag_configure("radiobutton_on", image=self.im_radiobutton_on)
         self.tag_configure("radiobutton_off", image=self.im_radiobutton_off)
         self.tag_configure("visible_on", image=self.im_visible)
-        self.tag_configure("visible_off", image=self.im_visible)
+        self.tag_configure("visible_off", image=self.im_checkbox_off)
 
         # check / uncheck boxes on click
         self.bind("<Button-1>", self._box_click, True)
@@ -93,7 +93,7 @@ class LayerTreeview(CheckboxTreeview):
             self.change_state(item, "checkbox_on")
         elif self.tag_has("radiobutton_off", item):
             self.change_state(item, "radiobutton_on")
-        elif self.tag_has("radiobutton_off", item):
+        elif self.tag_has("visible_off", item):
             self.change_state(item, "visible_on")
 
     def _turn_off(self, item):
@@ -101,7 +101,7 @@ class LayerTreeview(CheckboxTreeview):
             self.change_state(item, "checkbox_off")
         elif self.tag_has("radiobutton_on", item):
             self.change_state(item, "radiobutton_off")
-        elif self.tag_has("radiobutton_on", item):
+        elif self.tag_has("visible_on", item):
             self.change_state(item, "visible_off")
 
     def _is_turned_on(self, item) -> bool:

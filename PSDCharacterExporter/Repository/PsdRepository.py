@@ -40,23 +40,31 @@ class PsdRepository:
             ratio = min(SettingFileService.read_config(SettingKeys.image_preview_size_x) / psd_file.size[0],
                         SettingFileService.read_config(SettingKeys.image_preview_size_y) / psd_file.size[1])
 
+            # TODO *がTOPの場合の応急処置
+            for layer in psdtool_layer_list:
+                if layer.parent.name == "Root" and layer.name.startswith("*"):
+                    root_base_property = BaseLayerProperties(name="Root", size=(0, 0), offset=(0, 0),
+                                                             visible=True, layer_image=None)
+                    domain_layer_list.append(GroupLayer(root_base_property, parent_group=None, child_layers=None))
+                    break
+
             for layer in psdtool_layer_list:
                 logger.debug(f"psd: {layer} size: {layer.size} opacity: {layer.opacity}")
+                logger.debug(f"parent: {layer.parent.name}")
                 # if ":flip" in layer.name:
                 #     continue
 
                 if layer.is_group():
                     group = define_group_domain(layer, domain_layer_list)
                     domain_layer_list.append(group)
-                    # logger.debug(group)
+                    # logger.debug(group.parent)
                 else:
                     layer_obj = define_image_layer_domain(layer, domain_layer_list, ratio)
                     domain_layer_list.append(layer_obj)
                     # logger.debug(layer_obj)
 
             add_childs_for_group(domain_layer_list)
-
-            top_base_properties = BaseLayerProperties(name="Root", size=psd_file.size, offset=psd_file.offset,
+            top_base_properties = BaseLayerProperties(name="top", size=psd_file.size, offset=psd_file.offset,
                                                       visible=True, layer_image=None)
             top_layer_groups = PsdTopGroupLayer(base_layer_properties=top_base_properties, layer_list=domain_layer_list)
 
@@ -84,6 +92,9 @@ def define_group_domain(group_obj, domain_layer_list):
         if group_obj.name.startswith("!"):
             return VisibleGroupLayer(base_property, parent_group=parent_group)
         if group_obj.name.startswith("*"):
+            if parent_group is None and group_obj.parent.name == "Root":
+                reversed_domain_layer_list = list(reversed(domain_layer_list))
+                parent_group = next(filter(lambda obj: obj.name == group_obj.parent.name, reversed_domain_layer_list))
             return OneSelectGroupLayer(base_property, parent_group=parent_group)
     return GroupLayer(base_property, parent_group=parent_group, child_layers=None)
 

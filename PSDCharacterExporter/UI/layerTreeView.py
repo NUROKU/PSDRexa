@@ -71,8 +71,6 @@ class LayerTreeview(CheckboxTreeview):
                         self.change_state(tree_item[1], 'visible_off')
             self._check_visible_operation_presenter = CheckVisibleOperationPresenter([])
             self._update_canvas()
-            # TODO まれに初回だけ立ち絵が欠けるから二回実行してる、どっか非同期なのかな
-            self._update_canvas()
         except Exception as e:
             messagebox.showerror("error", f"{e.__str__()}アプリケーションを終了します。")
             exit()

@@ -1,0 +1,13 @@
+attrs
+docopt
+imageio
+networkx
+numpy
+packaging
+pillow
+psd-tools
+pywavelets
+scikit-image
+scipy
+tifffile
+ttkwidgets

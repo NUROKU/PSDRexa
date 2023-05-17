@@ -64,6 +64,7 @@ Mac向け：
 
 ### Python3.9以外を使いたい
 下記コマンドを実行して、同梱物のmoduleフォルダを置き換えてください
+
 pip install -r requirements.txt -t module
 
 # ライセンス

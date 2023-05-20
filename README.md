@@ -12,7 +12,7 @@ PSD立ち絵素材をいい感じに画像出力するやつ
 - Python 3.9  
 PythonはインストールしてDaVinciResolve上で使えるようにしておいてください  
 ワークスペース→コンソール→Py3を選択してエラーメッセージが出力されなければ使える環境になってます。  
-[Python3.9のインストールはここから](https://www.python.org/downloads/release/python-3913/)
+[Pythonインストール手順はここから](./HowToInstall_Python.md)
 
 # 対応OS
 - Windows  
@@ -61,11 +61,6 @@ Mac向け：
 * 基ファイルのサイズで画像出力：ONの場合は読み込まれたPSDと同じサイズの立ち絵が出力される。OFFの場合は縦横比を維持しつつHeight,Widthで指定したサイズで出力される。
 * 基ファイルのサイズでプレビュー：本ツールのプレビュー用の立ち絵画像のサイズ
 * psdtoolkitの機能を使用：ONの場合ラジオボタンや!に対応してPSDを読み込む。OFFの場合は全部チェックボックスで読み込む
-
-### Python3.9以外を使いたい
-下記コマンドを実行して、同梱物のmoduleフォルダを置き換えてください
-
-pip install -r requirements.txt -t module
 
 # ライセンス
 このプロジェクトは、GNU General Public License v3.0 (GPL-3.0) ライセンスの下でライセンスされています。

@@ -1,5 +1,3 @@
-# DaVinciResolveへのPython導入方法の推敲
-
 ## DaVinciResolveへのPython3.9の導入方法
 
 1. Python3.9のインストール

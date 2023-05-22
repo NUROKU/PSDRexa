@@ -30,9 +30,11 @@ class ResolveBinDatastore:
         if existing_bin is None:
             new_bin = media_pool.AddSubFolder(media_pool.GetRootFolder(), self.image_bin_name)
             logger.debug(f"新しいBinが作成されました: {self.image_bin_name}")
+            media_pool.SetCurrentFolder(new_bin)
             return new_bin
         else:
             logger.debug(f"既に同じ名前のBinが存在するため、新しいBinを作成しませんでした: {self.image_bin_name}")
+            media_pool.SetCurrentFolder(existing_bin)
             return existing_bin
 
     def get_image_from_bin(self, file_name):
@@ -58,12 +60,12 @@ class ResolveBinDatastore:
         # timelineへのimage追加もしちゃってるの単純に命名詐欺では？
 
         media_storage = ResolveService.get_resolve().GetMediaStorage()
+        self.get_image_bin()
         item = media_storage.AddItemListToMediaPool(str(image_path))
 
         project_manager = ResolveService.get_resolve().GetProjectManager()
         project = project_manager.GetCurrentProject()
         media_pool = project.GetMediaPool()
-        bin_root = self.get_image_bin()
 
         res = media_pool.AppendToTimeline(item)
         # return res

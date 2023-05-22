@@ -1,6 +1,6 @@
 # DaVinciResolveへのPython導入方法
 1. Python3.9のインストール→[ここからダウンロードできます](https://www.python.org/downloads/release/python-3913/)  
-インストーラ起動時に「Add Python 3.9 to PATH」にチェックを入れてインストールしてください
+インストーラを起動して「Add Python 3.9 to PATH」にチェックを入れてインストールしてください
 
 2. DaVinciResolveを起動し適当なプロジェクトを開き、「ワークスペース」→「コンソール」を開き、「Py3」をクリック  
 これで何もメッセージが出なかったら正常にPython3.9がDaVinciResolveで使えるという事になります。

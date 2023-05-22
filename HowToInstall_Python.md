@@ -1,26 +1,39 @@
-# DaVinciResolveへのPython導入方法
-1. Python3.9のインストール→[ここからダウンロードできます](https://www.python.org/downloads/release/python-3913/)  
-インストーラを起動して「Add Python 3.9 to PATH」にチェックを入れてインストールしてください
+# DaVinciResolveへのPython導入方法の推敲
 
-2. DaVinciResolveを起動し適当なプロジェクトを開き、「ワークスペース」→「コンソール」を開き、「Py3」をクリック  
-これで何もメッセージが出なかったら正常にPython3.9がDaVinciResolveで使えるという事になります。
+## DaVinciResolveへのPython3.9の導入方法
 
---------------------------------
+1. Python3.9のインストール
+   - [Python公式ウェブサイト](https://www.python.org/downloads/release/python-3913/)からPython3.9をダウンロードします。
+   - インストーラを起動し、「Add Python 3.9 to PATH」にチェックを入れてインストールします。
 
-## 上記手順でDaVinciResolveがPython3.9を認識しなかった場合
+2. DaVinciResolveでPython3.9を有効化する
+   - DaVinciResolveを起動し、適当なプロジェクトを開きます。
+   - 「ワークスペース」→「コンソール」を開きます。
+   - 「Py3」をクリックします。
+   - もし何もメッセージが表示されなければ、Python3.9が正常にDaVinciResolveで使用できるようになっています。
 
-PCの環境変数に下記を追加してください
->変数名：PYTHONHOME  
-変数値：Python3.9が置かれているディレクトリ
+## DaVinciResolveがPython3.9を認識しない場合の対処方法
 
-変数値のディレクトリははWindowsだと恐らく下記  
+DaVinciResolveがPython3.9を認識しない場合は、PCの環境変数に以下の設定を追加してください。
+
+- 変数名：PYTHONHOME
+- 変数値：Python3.9のインストールされたディレクトリのパス
+
+Windowsの場合、ディレクトリのパスはおそらく以下になります。
+
 C:\Users\{ユーザ名}\AppData\Local\Programs\Python\Python39\
 
--------------------------------
+## Python3.9以外の特定のPythonバージョンを使用したい場合
 
-## わけあってPython3.9以外のバージョンを使いたい
-下記コマンドを特定のPythonのバージョンで実行して、同梱物のmoduleフォルダを置き換えてください
+もしPython3.9以外のバージョンを使用したい場合は、以下の手順で同梱物の"module"フォルダを置き換えてください。
 
+1. 特定のPythonバージョンをインストールします。
+2. コマンドプロンプトまたはターミナルで以下のコマンドを実行します。
+
+```
 pip install -r requirements.txt -t module
+```
 
-（Mac版やりぞりぷと対応版は、このmoduleフォルダの中身を各OS,各対応バージョンでinstallしているだけだったり…）
+このコマンドで出力されたmoduleフォルダを同梱物のに置き換えてください。
+
+(Mac版やりぞりぷと版はmoduleフォルダの中身を各OSおよび対応バージョンに合わせてインストールしてあるだけだったり…)

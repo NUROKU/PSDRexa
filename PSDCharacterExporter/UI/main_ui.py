@@ -29,9 +29,9 @@ class MainUI:
             try:
                 # TODO ここ別んとこに出しときたいなあ
                 directory_path = filedialog.askdirectory()
-
-                SettingFileService.update_and_save_config(SettingKeys.image_output_folder, directory_path)
-                directory_label.config(text=directory_path)
+                if directory_path != "":
+                    SettingFileService.update_and_save_config(SettingKeys.image_output_folder, directory_path)
+                    directory_label.config(text=directory_path)
             except Exception as e:
                 messagebox.showerror("error", e.__str__())
 

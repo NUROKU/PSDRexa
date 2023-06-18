@@ -6,9 +6,10 @@ logger = Logger.get_logger(__name__)
 
 
 class LayerImage:
-    def __init__(self, image: Image, preview_ratio: float, opacity: int):
+    def __init__(self, image: Image, preview_ratio: float, opacity: int, blend_mode: str):
         self._image = image
         self._opacity = opacity
+        self._blend_mode = blend_mode
         if self._image is None:
             pil_img = Image.new("RGBA", (1, 1), (255, 255, 255, 0))
             self._image = pil_img
@@ -27,6 +28,10 @@ class LayerImage:
     @property
     def opacity(self):
         return self._opacity
+
+    @property
+    def blend_mode(self):
+        return self._blend_mode
 
     def resized_image(self, size_width: int, size_height: int) -> Image:
         if size_width <= 0 or size_height <= 0:

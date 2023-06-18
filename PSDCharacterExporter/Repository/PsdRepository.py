@@ -40,7 +40,7 @@ class PsdRepository:
             ratio = min(SettingFileService.read_config(SettingKeys.image_preview_size_x) / psd_file.size[0],
                         SettingFileService.read_config(SettingKeys.image_preview_size_y) / psd_file.size[1])
 
-            # TODO *がTOPの場合の応急処置
+            # TODO *がTOPの場合の応急処置下に入れたけど、これ汚いやだ
             for layer in psdtool_layer_list:
                 if layer.parent.name == "Root" and layer.name.startswith("*"):
                     root_base_property = BaseLayerProperties(name="Root", size=(0, 0), offset=(0, 0),
@@ -56,6 +56,7 @@ class PsdRepository:
 
                 if layer.is_group():
                     group = define_group_domain(layer, domain_layer_list)
+                    logger.debug(f"{layer.name} - {layer.blend_mode}")
                     domain_layer_list.append(group)
                     # logger.debug(group.parent)
                 else:
@@ -123,10 +124,11 @@ def define_image_layer_domain(layer_obj, domain_layer_list, ratio):
     if layer_obj.opacity != 255 and layer_obj.opacity != 0:
         # 透明度調整
         back_img = Image.new("RGBA", layer_obj.size, (255, 255, 255, 0))
-        img = Image.blend(back_img,layer_obj.topil(),layer_obj.opacity / 255)
+        img = Image.blend(back_img,layer_obj.topil(), layer_obj.opacity / 255)
+
     base_property = BaseLayerProperties(name=layer_obj.name, size=layer_obj.size, offset=layer_obj.offset,
                                         visible=layer_obj.is_visible(),
-                                        layer_image=LayerImage(img, preview_ratio=ratio, opacity=layer_obj.opacity))
+                                        layer_image=LayerImage(img, preview_ratio=ratio, opacity=layer_obj.opacity, blend_mode=str(layer_obj.blend_mode)))
 
     if SettingFileService.read_config(SettingKeys.use_psdtool_func) is True:
         if layer_obj.name.startswith("*"):

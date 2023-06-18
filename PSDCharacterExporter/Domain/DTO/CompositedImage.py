@@ -1,7 +1,8 @@
 from datetime import datetime
 
-from PIL import Image
+from PIL import Image, ImageChops
 
+import numpy as np
 from Common import Logger
 from Domain.Psd.PsdTopGroupLayer import PsdTopGroupLayer
 from Service.SettingFileService import SettingFileService, SettingKeys
@@ -20,7 +21,7 @@ class CompositedImage:
             self._ratio = min(self._layer_image_size[0] / top_group_layer.size[0],
                               self._layer_image_size[1] / top_group_layer.size[1])
 
-        self._composited_image = self.create_composited_image(top_group_layer=top_group_layer,
+        self._composited_image = self._create_composited_image(top_group_layer=top_group_layer,
                                                               is_for_preview=is_for_preview)
 
         self._id = id
@@ -49,20 +50,37 @@ class CompositedImage:
 
         return resized_image
 
-    def create_composited_image(self, top_group_layer: PsdTopGroupLayer, is_for_preview: bool):
+    def _create_composited_image(self, top_group_layer: PsdTopGroupLayer, is_for_preview: bool):
         composited_image = Image.new("RGBA", self._layer_image_size, (255, 255, 255, 0))
 
         for layer in top_group_layer.image_layer_list:
             if layer.is_visible:
+                offset = (0,0)
+                additional_image = None
                 if is_for_preview and SettingFileService.read_config(SettingKeys.is_image_preview_size_original) is False:
-                    resized_offset = (int(layer.offset[0] * self._ratio), int(layer.offset[1] * self._ratio))
-
-                    c = Image.new('RGBA', self._layer_image_size, (255, 255, 255, 0))
-                    c.paste(layer.layer_image.previewed_image,resized_offset)
-                    composited_image = Image.alpha_composite(composited_image, c)
+                    offset = (int(layer.offset[0] * self._ratio), int(layer.offset[1] * self._ratio))
+                    additional_image = layer.layer_image.previewed_image
                 else:
-                    c = Image.new('RGBA', self._layer_image_size, (255, 255, 255, 0))
-                    c.paste(layer.layer_image.image,layer.offset)
-                    composited_image = Image.alpha_composite(composited_image, c)
+                    offset = layer.offset
+                    additional_image = layer.layer_image.image
+
+                if layer.layer_image.blend_mode == "BlendMode.NORMAL":
+                    composited_image = self._normal(composited_image, additional_image, offset)
+                elif layer.layer_image.blend_mode == "BlendMode.MULTIPLY":
+                    composited_image = self._multiply(composited_image, additional_image, offset)
+
 
         return composited_image
+
+    # TODO これImageLayerんとこに持ってっておきたいな、というかオブジェクト指向どこ行ったんだよこれ面倒になっただろ
+    def _normal(self, original_image, additional_image, offset):
+        c = Image.new('RGBA', self._layer_image_size, (255, 255, 255, 0))
+        c.paste(additional_image, offset)
+        return Image.alpha_composite(original_image, c)
+
+    def _multiply(self, original_image, additional_image, offset):
+        c = Image.new('RGBA', self._layer_image_size, (255, 255, 255, 255))
+        c.paste(additional_image, offset,mask=additional_image)
+
+        result = ImageChops.multiply(original_image,c)
+        return result

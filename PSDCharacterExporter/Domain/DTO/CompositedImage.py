@@ -55,8 +55,6 @@ class CompositedImage:
 
         for layer in top_group_layer.image_layer_list:
             if layer.is_visible:
-                offset = (0,0)
-                additional_image = None
                 if is_for_preview and SettingFileService.read_config(SettingKeys.is_image_preview_size_original) is False:
                     offset = (int(layer.offset[0] * self._ratio), int(layer.offset[1] * self._ratio))
                     additional_image = layer.layer_image.previewed_image
@@ -68,7 +66,6 @@ class CompositedImage:
                     composited_image = self._normal(composited_image, additional_image, offset)
                 elif layer.layer_image.blend_mode == "BlendMode.MULTIPLY":
                     composited_image = self._multiply(composited_image, additional_image, offset)
-
 
         return composited_image
 

@@ -2,12 +2,12 @@ import sys
 import os
 
 # Windows用のパス
-windows_path_base = "C:\\ProgramData\\Blackmagic Design\\DaVinci Resolve\\Fusion\\Modules\\PSDCharacterExporter"
-windows_user_path_base = os.path.join(os.environ.get("USERPROFILE",""), "AppData\\Local\\Blackmagic Design\\DaVinci Resolve\\Fusion\\Modules\\PSDCharacterExporter")
+windows_path_base = "C:\\ProgramData\\Blackmagic Design\\DaVinci Resolve\\Fusion\\Modules\\PSDRexa"
+windows_user_path_base = os.path.join(os.environ.get("USERPROFILE",""), "AppData\\Local\\Blackmagic Design\\DaVinci Resolve\\Fusion\\Modules\\PSDRexa")
 
 # Mac用のパス
-mac_path_base = "/Library/Application Support/Blackmagic Design/DaVinci Resolve/Fusion/Modules/PSDCharacterExporter"
-mac_user_path_base = os.path.join(os.environ.get("HOME",""), "Library/Application Support/Blackmagic Design/DaVinci Resolve/Fusion/Modules/PSDCharacterExporter")
+mac_path_base = "/Library/Application Support/Blackmagic Design/DaVinci Resolve/Fusion/Modules/PSDRexa"
+mac_user_path_base = os.path.join(os.environ.get("HOME",""), "Library/Application Support/Blackmagic Design/DaVinci Resolve/Fusion/Modules/PSDRexa")
 
 # 使用するパスの選択
 if os.name == 'nt':

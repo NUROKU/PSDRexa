@@ -1,4 +1,4 @@
-# PSDCharacterExporter
+# PSDRexa
 Export PSD Character Image for DaVinci Resolve
 
 PSD立ち絵素材をいい感じに画像出力するやつ

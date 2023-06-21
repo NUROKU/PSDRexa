@@ -39,7 +39,7 @@ class MainUI:
             self.setting_window.execute()
 
         root = tk.Tk()
-        root.title("PSDCharacterImageExporter")
+        root.title("PSDRexa")
         root.geometry("800x600")
 
         # 設定とか

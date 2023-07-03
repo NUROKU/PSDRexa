@@ -9,7 +9,7 @@ logger = Logger.get_logger(__name__)
 class ResolveBinDatastore:
     def __init__(self):
         # Template用のはTemplate_binみたいな名前のDatastoreクラス作る
-        self.image_bin_name = "PSDCharacterImage"
+        self.image_bin_name = "RSDRexa"
         pass
 
     # Bin作成

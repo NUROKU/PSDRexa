@@ -1,4 +1,6 @@
 import tkinter
+import platform
+import os
 import tkinter as tk
 from tkinter import messagebox, filedialog
 
@@ -41,6 +43,13 @@ class MainUI:
         root = tk.Tk()
         root.title("PSDRexa")
         root.geometry("800x600")
+
+        resource_folder = os.path.abspath(os.path.join(os.path.dirname(os.path.realpath(__file__)), "Resources"))
+        if platform.system() == 'Windows':
+            root.iconbitmap(os.path.join(resource_folder, "ico_orig.ico"))
+        else:
+            img = tk.PhotoImage(file=os.path.join(resource_folder, "ico_orig.gif"))
+            root.tk.call('wm', 'iconphoto', root._w, img)
 
         # 設定とか
         settings_frame1 = tk.Frame(root)

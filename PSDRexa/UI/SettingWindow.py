@@ -12,7 +12,7 @@ class SettingWindow:
     def execute(self):
         dlg_modal = tk.Toplevel()
 
-        dlg_modal.title("設定")  # ウィンドウタイトル
+        dlg_modal.title("settings")  # ウィンドウタイトル
         dlg_modal.geometry("600x200")
 
         def select_folder():
@@ -34,7 +34,7 @@ class SettingWindow:
                 SettingKeys.use_psdtool_func: checkbox_var_3.get()
             }
             SettingFileService.update_and_save_configs(config_dict)
-            messagebox.showinfo("Info", "設定が保存されました。アプリケーションを終了します。")
+            messagebox.showinfo("Info", "Settings have been saved. Exit the application.")
             # save_state_label.config(text="Save Done!")
             dlg_modal.quit()
 
@@ -44,7 +44,7 @@ class SettingWindow:
 
         ### image_output_folder
         frame1 = tk.Frame(dlg_modal)
-        folder_button = tk.Button(frame1, text="画像出力先", command=select_folder)
+        folder_button = tk.Button(frame1, text="Image output destination", command=select_folder)
         folder_button.pack(side="left")
         folder_path_label = tk.Label(frame1, text=SettingFileService.read_config(SettingKeys.image_output_folder))
         folder_path_label.pack(side="left")
@@ -56,7 +56,7 @@ class SettingWindow:
 
         ### image_size
         checkbox_var = tk.BooleanVar(value=SettingFileService.read_config(SettingKeys.is_image_size_original))
-        checkbox = tk.Checkbutton(dlg_modal, text="基ファイルのサイズで画像出力", variable=checkbox_var)
+        checkbox = tk.Checkbutton(dlg_modal, text="Output images in the size of the base file", variable=checkbox_var)
         checkbox.pack(side="top", anchor=tk.W)
 
         image_size_frame1 = tk.Frame(dlg_modal)
@@ -82,7 +82,7 @@ class SettingWindow:
 
         ### preview_image_size
         checkbox_var_2 = tk.BooleanVar(value=SettingFileService.read_config(SettingKeys.is_image_preview_size_original))
-        checkbox_2 = tk.Checkbutton(dlg_modal, text="基ファイルのサイズでプレビュー", variable=checkbox_var_2)
+        checkbox_2 = tk.Checkbutton(dlg_modal, text="Preview in the size of the base file", variable=checkbox_var_2)
         checkbox_2.pack(side="top", anchor=tk.W)
 
         image_size_frame2 = tk.Frame(dlg_modal)
@@ -109,7 +109,7 @@ class SettingWindow:
         sep3.pack(fill="both")
         #
         checkbox_var_3 = tk.BooleanVar(value=SettingFileService.read_config(SettingKeys.use_psdtool_func))
-        checkbox_3 = tk.Checkbutton(dlg_modal, text="psdtoolkitの機能(*や!の変換)を使用", variable=checkbox_var_3)
+        checkbox_3 = tk.Checkbutton(dlg_modal, text="Use psdtoolkit feature", variable=checkbox_var_3)
         checkbox_3.pack(side="top", anchor=tk.W)
 
         # Button

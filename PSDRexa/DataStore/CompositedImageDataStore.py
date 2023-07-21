@@ -13,4 +13,4 @@ class CompositedImageDataStore:
             composted_image.save(save_path)
         except Exception:
             # 雑だね
-            raise DataStoreError("立ち絵画像の保存に失敗しました。出力先フォルダ指定が正しいか確認してください")
+            raise DataStoreError("Failed to save composited image")

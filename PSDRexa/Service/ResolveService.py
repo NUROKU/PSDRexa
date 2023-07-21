@@ -16,5 +16,5 @@ class ResolveService:
     @staticmethod
     def get_resolve():
         if ResolveService.resolve is None:
-            raise ServiceError("DaVinci Resolveの読み込みに失敗しました")
+            raise ServiceError("DaVinci Resolve failed to load")
         return ResolveService.resolve

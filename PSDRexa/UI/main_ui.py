@@ -53,9 +53,9 @@ class MainUI:
 
         # 設定とか
         settings_frame1 = tk.Frame(root)
-        btn3 = tkinter.Button(settings_frame1, text='設定', command=settings, width=5)
+        btn3 = tkinter.Button(settings_frame1, text='setting', command=settings, width=5)
         btn3.pack(side="left", padx=5, pady=5, anchor=tk.W)
-        btn4 = tk.Button(settings_frame1, text="出力先", command=set_local_folder)
+        btn4 = tk.Button(settings_frame1, text="output_location", command=set_local_folder)
         btn4.pack(side="left", padx=5, pady=5, anchor=tk.W)
         directory_label = tk.Label(settings_frame1,
                                    text=SettingFileService.read_config(SettingKeys.image_output_folder))
@@ -70,7 +70,7 @@ class MainUI:
         tree = LayerTreeview(root, canvas=canvas, show='tree')
         tree.pack(fill="both", expand=True)
 
-        btn1 = tkinter.Button(root, text='出力', command=save, width=5)
+        btn1 = tkinter.Button(root, text='output', command=save, width=5)
         btn1.pack(side="left", padx=5, pady=5, anchor=tk.N)
         # btn2 = tkinter.Button(root, text='更新', command=save, width = 5)
         # btn2.pack(side="left", padx=5, pady=5, anchor = tk.N)

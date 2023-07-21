@@ -71,10 +71,10 @@ class PsdRepository:
 
             return Psd(psd_meta=psd_meta, psd_top_layer_group=top_layer_groups)
         except DataStoreError as e:
-            raise RepositoryError("PSDファイルの読み込みに失敗しました。")
+            raise RepositoryError("Failed to load psd file")
         except Exception as e:
             logger.exception(e)
-            raise RepositoryError("PSDファイルの読み込みに失敗しました。")
+            raise RepositoryError("Failed to load psd file")
 
 
 def define_group_domain(group_obj, domain_layer_list):

@@ -44,7 +44,7 @@ class ResolveBinDatastore:
             if clip_attrs['Name'] == file_name:
                 return clip
 
-        logger.debug(f"指定されたファイル名の画像が見つかりませんでした: {file_name}")
+        logger.debug(f"Failed to get image : {file_name}")
         return None
 
     # def add_image(self, bin):

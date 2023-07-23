@@ -36,6 +36,8 @@ class MainUI:
                     directory_label.config(text=directory_path)
             except Exception as e:
                 messagebox.showerror("error", e.__str__())
+        def set_output_index(*args):
+            SettingFileService.update_and_save_config(SettingKeys.index_for_output, spinbox_var.get())
 
         def settings():
             self.setting_window.execute()
@@ -72,6 +74,15 @@ class MainUI:
 
         btn1 = tkinter.Button(root, text='出力', command=save, width=5)
         btn1.pack(side="left", padx=5, pady=5, anchor=tk.N)
+
+        # SpinBoxの設定
+        index_label = tk.Label(root, text="出力index:")
+        index_label.pack(side="top", padx=1, pady=1, anchor=tk.N)
+        spinbox_var = tk.StringVar()
+        spinbox_var.trace("w", set_output_index)
+        spinbox = tk.Spinbox(root, textvariable=spinbox_var, from_=1, to=100)
+        spinbox.pack(side="top", padx=1, pady=1, anchor=tk.N)
+
         # btn2 = tkinter.Button(root, text='更新', command=save, width = 5)
         # btn2.pack(side="left", padx=5, pady=5, anchor = tk.N)
 

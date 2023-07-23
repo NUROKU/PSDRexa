@@ -14,6 +14,7 @@ class SettingKeys(Enum):
     is_image_preview_size_original = "is_image_preview_size_original"
     image_preview_size_x = "image_preview_size_x"
     image_preview_size_y = "image_preview_size_y"
+    index_for_output = "index_for_output"
     use_psdtool_func = "use_psdtool_func"
 
 

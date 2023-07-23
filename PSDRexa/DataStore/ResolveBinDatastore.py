@@ -2,6 +2,7 @@ from pathlib import Path
 
 from Common import Logger
 from Service.ResolveService import ResolveService
+from Service.SettingFileService import SettingKeys, SettingFileService
 
 logger = Logger.get_logger(__name__)
 
@@ -63,9 +64,27 @@ class ResolveBinDatastore:
         self.get_image_bin()
         item = media_storage.AddItemListToMediaPool(str(image_path))
 
-        project_manager = ResolveService.get_resolve().GetProjectManager()
-        project = project_manager.GetCurrentProject()
+        project = ResolveService.get_resolve().GetProjectManager().GetCurrentProject()
         media_pool = project.GetMediaPool()
+        timeline = project.GetCurrentTimeline()
 
-        res = media_pool.AppendToTimeline(item)
+        index = int(SettingFileService.read_config(SettingKeys.index_for_output))
+        max_right_offset = -1
+
+        video_items = timeline.GetItemListInTrack("video", index)
+        for video_item in video_items:
+            if max_right_offset < video_item.GetEnd():
+                max_right_offset = video_item.GetEnd()
+
+        if max_right_offset == -1:
+            max_right_offset = ResolveService.get_startframe()
+
+        print(max_right_offset)
+        res = media_pool.AppendToTimeline([{
+                       'mediaPoolItem': item[0],
+                       'startFrame' :0,
+                       'mediaType' :1,
+                       'trackIndex' :index,
+                       'recordFrame' : max_right_offset
+               }])
         # return res

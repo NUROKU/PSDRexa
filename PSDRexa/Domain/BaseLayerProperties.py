@@ -2,6 +2,8 @@ from Domain.Image.LayerImage import LayerImage
 
 
 class BaseLayerProperties:
+    __id_counter = 0
+
     def __init__(self, name: str, size: tuple, offset: tuple, visible: bool, layer_image: LayerImage):
         self.name = name
         self.size = size
@@ -13,6 +15,13 @@ class BaseLayerProperties:
         self.__post_init__()
 
     def __post_init__(self):
-        self.id_name = f"{self.name}_{id(self)}"
+
         v_name = self.name.lstrip('!*')
         self.viewer_name = v_name
+
+        name = v_name
+        invalid_chars = ['/', '\\', ':', '*', '?', '"', '<', '>', '|']
+        for char in invalid_chars:
+            name = name.replace(char, '_')
+        self.id_name = f"{name}_{BaseLayerProperties.__id_counter}"
+        BaseLayerProperties.__id_counter += 1

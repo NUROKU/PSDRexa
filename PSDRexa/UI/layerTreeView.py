@@ -74,6 +74,7 @@ class LayerTreeview(CheckboxTreeview):
         except Exception as e:
             messagebox.showerror("error", f"{e.__str__()}アプリケーションを終了します。")
             exit()
+        print(self.get_all_item(only_group=True))
         # self._update_canvas()
 
     def _get_assets_directory(self):
@@ -181,3 +182,18 @@ class LayerTreeview(CheckboxTreeview):
                 self._turn_on(item)
 
             self._update_canvas()
+
+    def get_all_item(self, only_group=False):
+        items = []
+        def get_checked_children(item):
+            ch = self.get_children(item)
+            if not (ch is () and only_group):
+                items.append(item)
+            for c in ch:
+                get_checked_children(c)
+
+        ch = self.get_children("")
+        for c in ch:
+            get_checked_children(c)
+        return items
+

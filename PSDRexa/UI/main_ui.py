@@ -11,6 +11,7 @@ from Service.SettingFileService import SettingKeys, SettingFileService
 from UI.CompositedImageCanvas import CompositedImageCanvas
 from UI.SettingWindow import SettingWindow
 from UI.layerTreeView import LayerTreeview
+from UI.OutputSettingUI import OutputSettingUI
 
 
 class MainUI:
@@ -28,14 +29,16 @@ class MainUI:
                 messagebox.showerror("error", e.__str__())
 
         def set_local_folder():
-            try:
-                # TODO ここ別んとこに出しときたいなあ
-                directory_path = filedialog.askdirectory()
-                if directory_path != "":
-                    SettingFileService.update_and_save_config(SettingKeys.image_output_folder, directory_path)
-                    directory_label.config(text=directory_path)
-            except Exception as e:
-                messagebox.showerror("error", e.__str__())
+            output_setting_ui = OutputSettingUI()
+            output_setting_ui.run()
+            # try:
+            #     # TODO ここ別んとこに出しときたいなあ
+            #     directory_path = filedialog.askdirectory()
+            #     if directory_path != "":
+            #         SettingFileService.update_and_save_config(SettingKeys.image_output_folder, directory_path)
+            #         directory_label.config(text=directory_path)
+            # except Exception as e:
+            #     messagebox.showerror("error", e.__str__())
         def set_output_index(*args):
             SettingFileService.update_and_save_config(SettingKeys.index_for_output, spinbox_var.get())
 

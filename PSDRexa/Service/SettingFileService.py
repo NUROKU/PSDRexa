@@ -17,6 +17,16 @@ class SettingKeys(Enum):
     index_for_output = "index_for_output"
     use_psdtool_func = "use_psdtool_func"
 
+    use_fusion_template = "use_fusion_template"
+    pachi_group_1 = "pachi_group_1"
+    pachi_group_2 = "pachi_group_2"
+    pachi_group_3 = "pachi_group_3"
+    pachi_group_4 = "pachi_group_4"
+    pachi_image_close_1 = "pachi_image_close_1"
+    pachi_image_close_2 = "pachi_image_close_2"
+    pachi_image_close_3 = "pachi_image_close_3"
+    pachi_image_close_4 = "pachi_image_close_4"
+
 
 class SettingFileService:
     json_path = ""

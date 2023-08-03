@@ -1,11 +1,16 @@
+import tkinter
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
 
 from Service.SettingFileService import SettingKeys, SettingFileService
-
+from Service.PsdMemorySaverService import PsdMemorySaverService
 
 class OutputSettingUI:
     def __init__(self):
+
+        self.psd_layer_list = PsdMemorySaverService.get_psd().top_layer_group.dump_list()
+
+
         self.root = tk.Toplevel()
         self.root.geometry('600x300')
 
@@ -39,10 +44,6 @@ class OutputSettingUI:
         self.list_box = tk.Listbox(frame_left)
         self.list_box.pack(pady=5)
 
-        # Adding dummy items to the list box
-        for item in ["Item 1", "Item 2", "Item 3"]:
-            self.list_box.insert(tk.END, item)
-
         self.list_box.bind('<<ListboxSelect>>', self.on_select)
 
         label_mepachi = tk.Label(frame_right, text="目パチ")
@@ -56,7 +57,7 @@ class OutputSettingUI:
 
         self.entry_mepachi_group = tk.Entry(frame_entry_mepachi_group)
         self.entry_mepachi_group.pack(side=tk.LEFT)
-        self.entry_mepachi_group.bind("<Button-1>", self.on_entry_click)
+        self.entry_mepachi_group.bind("<Button-1>", lambda event, parent_group="": self.on_entry_click(event, parent_group))
 
         frame_entry_mepachi = tk.Frame(frame_right)
         frame_entry_mepachi.pack(fill=tk.X)
@@ -66,6 +67,8 @@ class OutputSettingUI:
 
         self.entry_mepachi = tk.Entry(frame_entry_mepachi)
         self.entry_mepachi.pack(side=tk.LEFT)
+        self.entry_mepachi.bind("<Button-1>",
+                                        lambda event, parent_group=self.entry_mepachi_group: self.on_entry_click(event, parent_group))
 
         label_kuchipaku = tk.Label(frame_right, text="口パク")
         label_kuchipaku.pack()
@@ -78,7 +81,7 @@ class OutputSettingUI:
 
         self.entry_kuchipaku_group = tk.Entry(frame_entry_kuchipaku_group)
         self.entry_kuchipaku_group.pack(side=tk.LEFT)
-        self.entry_kuchipaku_group.bind("<Button-1>", self.on_entry_click)
+        self.entry_kuchipaku_group.bind("<Button-1>", lambda event, parent_group="": self.on_entry_click(event, parent_group))
 
         frame_entry_kuchipaku = tk.Frame(frame_right)
         frame_entry_kuchipaku.pack(fill=tk.X)
@@ -88,6 +91,8 @@ class OutputSettingUI:
 
         self.entry_kuchipaku = tk.Entry(frame_entry_kuchipaku)
         self.entry_kuchipaku.pack(side=tk.LEFT)
+        self.entry_kuchipaku.bind("<Button-1>",
+                                        lambda event, parent_group=self.entry_kuchipaku_group: self.on_entry_click(event, parent_group))
 
         frame_buttons = tk.Frame(frame_right)
         frame_buttons.pack(pady=5)
@@ -104,15 +109,31 @@ class OutputSettingUI:
         # Get the line's text
         item = self.list_box.get(index)
         # Check which entry is focused and set its content to the selected item
-        if self.entry_mepachi == self.root.focus_get():
+        if self.entry_mepachi == self.root.focus_get() and self.entry_mepachi_group.get() != "":
             self.entry_mepachi.delete(0, 'end')
             self.entry_mepachi.insert(0, item)
-        elif self.entry_kuchipaku == self.root.focus_get():
+        elif self.entry_kuchipaku == self.root.focus_get() and self.entry_kuchipaku_group.get() != "":
             self.entry_kuchipaku.delete(0, 'end')
             self.entry_kuchipaku.insert(0, item)
+        elif self.entry_kuchipaku_group == self.root.focus_get():
+            self.entry_kuchipaku_group.delete(0, 'end')
+            self.entry_kuchipaku_group.insert(0, item)
+        elif self.entry_mepachi_group == self.root.focus_get():
+            self.entry_mepachi_group.delete(0, 'end')
+            self.entry_mepachi_group.insert(0, item)
 
-    def on_entry_click(self, event):
-        print("Entry box clicked")
+    def on_entry_click(self, event, parent_group):
+        print(event.widget)
+        self.list_box.delete(0, tkinter.END)
+        if parent_group == "":
+            items = [i for i in self.psd_layer_list if i[3] is False]
+            for item in items:
+                self.list_box.insert(tk.END, item[0])
+        else:
+            print(parent_group.get())
+            items = [i for i in self.psd_layer_list if i[2] == parent_group.get()]
+            for item in items:
+                self.list_box.insert(tk.END, item[0])
 
     def on_output_button_click(self):
         try:
@@ -130,10 +151,7 @@ class OutputSettingUI:
         print("Save button clicked")
 
     def checkbox_update(self):
-        if self.check_value.get():
-            print("チェックボックスはオンです。")
-        else:
-            print("チェックボックスはオフです。")
+        SettingFileService.update_and_save_config(SettingKeys.use_fusion_template, self.check_value.get())
 
     def run(self):
         self.root.mainloop()

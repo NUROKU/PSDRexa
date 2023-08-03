@@ -194,6 +194,7 @@ class LayerTreeview(CheckboxTreeview):
         ch = self.get_children("")
         for c in ch:
             get_childrens(c)
+
         return items
 
     def get_all_item_viewer_name(self, only_group=False):

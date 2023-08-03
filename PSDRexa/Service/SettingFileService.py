@@ -53,7 +53,7 @@ class SettingFileService:
             return SettingFileService.config_dict
 
     @staticmethod
-    def update_and_save_config(key: SettingKeys, value: str):
+    def update_and_save_config(key: SettingKeys, value):
         config = SettingFileService.load_config()
         config[key.value] = value
         SettingFileService.config_dict = config

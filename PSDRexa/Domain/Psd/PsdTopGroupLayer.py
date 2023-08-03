@@ -37,6 +37,18 @@ class PsdTopGroupLayer:
 
         return ret_list
 
+    def dump_list(self) -> List:
+        # parent iid text visible
+        ret_list = []
+
+        for layer in self._layer_list:
+            layer_parent_id = layer.parent.id_name if layer.parent is not None else ""
+            is_child = layer.layer_type_name.endswith("ImageLayer")
+            ret_list.append(
+                [layer.id_name, layer.viewer_name, layer_parent_id,  is_child])
+
+        return ret_list
+
     def select_layers_by_operation(self, check_visible_operation: CheckVisibleOperation):
         for check in check_visible_operation.checked_list():
             layer = self._find_layer(check)

@@ -9,7 +9,7 @@ from Common import Logger
 logger = Logger.get_logger(__name__)
 
 
-class PsdTopGroupLayer:
+class PsdTop:
     def __init__(self, base_layer_properties: BaseLayerProperties, layer_list: List):
         self._layer_list = layer_list
         self._base_layer_properties = base_layer_properties
@@ -51,17 +51,17 @@ class PsdTopGroupLayer:
 
     def select_layers_by_operation(self, check_visible_operation: CheckVisibleOperation):
         for check in check_visible_operation.checked_list():
-            layer = self._find_layer(check)
+            layer = self.find_layer_by_id(check)
             layer.selected_on()
 
         for check in check_visible_operation.unchecked_list():
-            layer = self._find_layer(check)
+            layer = self.find_layer_by_id(check)
             layer.selected_off()
 
     def dump_visible_layer_id_names(self):
         return [layer.id_name for layer in self._layer_list if layer.is_visible]
 
-    def _find_layer(self, id_name: str):
+    def find_layer_by_id(self, id_name: str):
         for layer in self._layer_list:
             if layer.id_name == id_name:
                 return layer

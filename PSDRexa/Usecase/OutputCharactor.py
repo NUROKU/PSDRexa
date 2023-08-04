@@ -11,7 +11,7 @@ class OutputCharacter:
 
     def execute(self):
         psd = PsdMemorySaverService.get_psd()
-        composited_image = CompositedImage(psd.top_layer_group)
+        composited_image = CompositedImage(psd.top)
 
         self._composited_image_rep.save_composited_image(composited_image)
         self._character_repository.output_charactor(composited_image)

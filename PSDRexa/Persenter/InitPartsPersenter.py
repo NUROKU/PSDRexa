@@ -1,9 +1,17 @@
+from typing import List
+
+from Domain.DTO.CharacterPartsSet import CharacterPartsSet
+from Usecase.InitParts import InitParts
+
+
 class InitPartsPresenter:
     def __init__(self):
+        self.init_parts_usecase = InitParts()
         pass
 
-    def init_parts(self, psd_file_path: Path) -> List:
-        build_layer_list = BuildLayerList()
-        top_layer_group = build_layer_list.execute(psd_file_path)
+    def init_parts(self, parts_list: List) -> List:
+        ret_list = []
+        for n in parts_list:
+            ret_list.append(CharacterPartsSet(n))
 
-        return top_layer_group.dump_list_for_tree()
+        return ret_list

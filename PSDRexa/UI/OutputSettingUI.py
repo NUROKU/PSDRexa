@@ -8,7 +8,7 @@ from Service.PsdMemorySaverService import PsdMemorySaverService
 class OutputSettingUI:
     def __init__(self):
 
-        self.psd_layer_list = PsdMemorySaverService.get_psd().top_layer_group.dump_list()
+        self.psd_layer_list = PsdMemorySaverService.get_psd().top.dump_list()
 
 
         self.root = tk.Toplevel()

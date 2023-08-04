@@ -4,14 +4,14 @@ from PIL import Image, ImageChops
 
 import numpy as np
 from Common import Logger
-from Domain.Psd.PsdTopGroupLayer import PsdTopGroupLayer
+from Domain.Psd.PsdTop import PsdTop
 from Service.SettingFileService import SettingFileService, SettingKeys
 
 logger = Logger.get_logger(__name__)
 
 
 class CompositedImage:
-    def __init__(self, top_group_layer: PsdTopGroupLayer, is_for_preview: bool = False, id: str = None):
+    def __init__(self, top_group_layer: PsdTop, is_for_preview: bool = False, id: str = None):
         self._layer_image_size = top_group_layer.size
         self._ratio = 1.0
 
@@ -50,7 +50,7 @@ class CompositedImage:
 
         return resized_image
 
-    def _create_composited_image(self, top_group_layer: PsdTopGroupLayer, is_for_preview: bool):
+    def _create_composited_image(self, top_group_layer: PsdTop, is_for_preview: bool):
         composited_image = Image.new("RGBA", self._layer_image_size, (255, 255, 255, 0))
 
         for layer in top_group_layer.image_layer_list:

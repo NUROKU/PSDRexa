@@ -12,7 +12,7 @@ from Domain.ImageLayer.ImageLayer import ImageLayer
 from Domain.ImageLayer.OneSelectImageLayer import OneSelectImageLayer
 from Domain.Psd.Psd import Psd
 from Domain.Psd.PsdMeta import PsdMeta
-from Domain.Psd.PsdTopGroupLayer import PsdTopGroupLayer
+from Domain.Psd.PsdTop import PsdTop
 from DataStore.PsdDataStore import PsdDataStore
 from Exception.DataStoreError import DataStoreError
 from Exception.RepositoryError import RepositoryError
@@ -67,7 +67,7 @@ class PsdRepository:
             add_childs_for_group(domain_layer_list)
             top_base_properties = BaseLayerProperties(name="top", size=psd_file.size, offset=psd_file.offset,
                                                       visible=True, layer_image=None)
-            top_layer_groups = PsdTopGroupLayer(base_layer_properties=top_base_properties, layer_list=domain_layer_list)
+            top_layer_groups = PsdTop(base_layer_properties=top_base_properties, layer_list=domain_layer_list)
 
             return Psd(psd_meta=psd_meta, psd_top_layer_group=top_layer_groups)
         except DataStoreError as e:

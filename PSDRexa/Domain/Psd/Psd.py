@@ -10,3 +10,7 @@ class Psd:
     @property
     def top(self):
         return self._top
+
+    @property
+    def meta(self):
+        return self._meta

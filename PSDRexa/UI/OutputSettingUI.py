@@ -4,15 +4,14 @@ from tkinter import ttk, filedialog, messagebox
 
 from Service.SettingFileService import SettingKeys, SettingFileService
 from Service.PsdMemorySaverService import PsdMemorySaverService
+from Persenter.InitPartsPersenter import InitPartsPresenter
 
 class OutputSettingUI:
     def __init__(self):
 
         self.psd_layer_list = PsdMemorySaverService.get_psd().top.dump_list()
-
-
         self.root = tk.Toplevel()
-        self.root.geometry('600x300')
+        self.root.geometry('500x300')
 
         frame_top = tk.Frame(self.root)
         frame_top.pack(side=tk.TOP, fill=tk.X, pady=5)
@@ -25,7 +24,7 @@ class OutputSettingUI:
 
         ttk.Separator(self.root, orient='horizontal').pack(side=tk.TOP, fill=tk.X, pady=5)
 
-        self.check_value = tk.BooleanVar(value = SettingFileService.read_config(SettingKeys.use_fusion_template))
+        self.check_value = tk.BooleanVar(value= SettingFileService.read_config(SettingKeys.use_fusion_template))
         self.check_box = tk.Checkbutton(self.root, text="目パチや口パクが行えるFusionTemmplateとして出力する",
                                         variable=self.check_value, anchor='w', command=self.checkbox_update)
         self.check_box.pack(side=tk.TOP, anchor='w')
@@ -58,6 +57,7 @@ class OutputSettingUI:
         self.entry_mepachi_group = tk.Entry(frame_entry_mepachi_group)
         self.entry_mepachi_group.pack(side=tk.LEFT)
         self.entry_mepachi_group.bind("<Button-1>", lambda event, parent_group="": self.on_entry_click(event, parent_group))
+        self.entry_mepachi_group.insert(0, SettingFileService.read_config(SettingKeys.pachi_group_1))
 
         frame_entry_mepachi = tk.Frame(frame_right)
         frame_entry_mepachi.pack(fill=tk.X)
@@ -69,6 +69,7 @@ class OutputSettingUI:
         self.entry_mepachi.pack(side=tk.LEFT)
         self.entry_mepachi.bind("<Button-1>",
                                         lambda event, parent_group=self.entry_mepachi_group: self.on_entry_click(event, parent_group))
+        self.entry_mepachi.insert(0, SettingFileService.read_config(SettingKeys.pachi_image_close_1))
 
         label_kuchipaku = tk.Label(frame_right, text="口パク")
         label_kuchipaku.pack()
@@ -82,6 +83,7 @@ class OutputSettingUI:
         self.entry_kuchipaku_group = tk.Entry(frame_entry_kuchipaku_group)
         self.entry_kuchipaku_group.pack(side=tk.LEFT)
         self.entry_kuchipaku_group.bind("<Button-1>", lambda event, parent_group="": self.on_entry_click(event, parent_group))
+        self.entry_kuchipaku_group.insert(0, SettingFileService.read_config(SettingKeys.pachi_group_2))
 
         frame_entry_kuchipaku = tk.Frame(frame_right)
         frame_entry_kuchipaku.pack(fill=tk.X)
@@ -93,12 +95,12 @@ class OutputSettingUI:
         self.entry_kuchipaku.pack(side=tk.LEFT)
         self.entry_kuchipaku.bind("<Button-1>",
                                         lambda event, parent_group=self.entry_kuchipaku_group: self.on_entry_click(event, parent_group))
-
+        self.entry_kuchipaku.insert(0, SettingFileService.read_config(SettingKeys.pachi_image_close_2))
         frame_buttons = tk.Frame(frame_right)
         frame_buttons.pack(pady=5)
 
-        button_init = tk.Button(frame_buttons, text="初期構築を行う", command=self.on_init_button_click)
-        button_init.pack(side=tk.LEFT, padx=5)
+        # button_init = tk.Button(frame_buttons, text="初期構築を行う", command=self.on_init_button_click)
+        # button_init.pack(side=tk.LEFT, padx=5)
 
         button_save = tk.Button(frame_buttons, text="設定を保存する", command=self.on_save_button_click)
         button_save.pack(side=tk.LEFT, padx=5)
@@ -123,14 +125,12 @@ class OutputSettingUI:
             self.entry_mepachi_group.insert(0, item)
 
     def on_entry_click(self, event, parent_group):
-        print(event.widget)
         self.list_box.delete(0, tkinter.END)
         if parent_group == "":
             items = [i for i in self.psd_layer_list if i[3] is False]
             for item in items:
                 self.list_box.insert(tk.END, item[0])
         else:
-            print(parent_group.get())
             items = [i for i in self.psd_layer_list if i[2] == parent_group.get()]
             for item in items:
                 self.list_box.insert(tk.END, item[0])
@@ -141,14 +141,35 @@ class OutputSettingUI:
             if directory_path != "":
                 SettingFileService.update_and_save_config(SettingKeys.image_output_folder, directory_path)
                 self.label_output.config(text=directory_path)
+            self.root.lift()
         except Exception as e:
             messagebox.showerror("error", e.__str__())
+            self.root.lift()
 
     def on_init_button_click(self):
         print("Init button clicked")
 
     def on_save_button_click(self):
-        print("Save button clicked")
+        init_parts = InitPartsPresenter()
+        parts_list = []
+        try:
+            if self.entry_mepachi_group.get() != "":
+                parts_list.append(self.entry_mepachi_group.get())
+
+            if self.entry_kuchipaku_group.get() != "":
+                parts_list.append(self.entry_kuchipaku_group.get())
+            init_parts.init_parts(parts_list)
+
+            SettingFileService.update_and_save_config(SettingKeys.pachi_group_1, self.entry_mepachi_group.get())
+            SettingFileService.update_and_save_config(SettingKeys.pachi_group_2, self.entry_kuchipaku_group.get())
+            SettingFileService.update_and_save_config(SettingKeys.pachi_image_close_1, self.entry_mepachi.get())
+            SettingFileService.update_and_save_config(SettingKeys.pachi_image_close_2, self.entry_kuchipaku.get())
+
+            messagebox.showinfo("Title", "目パチや口パク用の初期構築が完了しました")
+            self.root.lift()
+        except Exception as e:
+            messagebox.showerror("error", e.__str__())
+            self.root.lift()
 
     def checkbox_update(self):
         SettingFileService.update_and_save_config(SettingKeys.use_fusion_template, self.check_value.get())

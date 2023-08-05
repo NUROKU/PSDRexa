@@ -9,9 +9,12 @@ class InitPartsPresenter:
         self.init_parts_usecase = InitParts()
         pass
 
-    def init_parts(self, parts_list: List) -> List:
+    def init_parts(self, parts_list: List):
         ret_list = []
         for n in parts_list:
             ret_list.append(CharacterPartsSet(n))
 
-        return ret_list
+
+
+        self.init_parts_usecase.execute(ret_list)
+

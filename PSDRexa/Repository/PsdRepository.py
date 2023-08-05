@@ -31,7 +31,6 @@ class PsdRepository:
         # TODO Flipのやつ対応できてない、あれgroupにもあるらしい
         try:
             psd_file = self._psd_datastore.get_psd(psd_file_path=psd_file_path)
-
             psd_meta = PsdMeta(file_path=psd_file_path)
 
             psdtool_layer_list = list(psd_file.descendants(include_clip=False))

@@ -6,7 +6,7 @@ from Domain.DTO.CompositedImage import CompositedImage
 from Service.SettingFileService import SettingFileService, SettingKeys
 
 
-class CharacterRepository:
+class CompositedImageResolveRepository:
     def __init__(self):
         self._character_datastore = CharacterFusionDataStore()
         self._resolve_bin_datastore = ResolveBinDatastore()

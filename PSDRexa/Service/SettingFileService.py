@@ -74,3 +74,9 @@ class SettingFileService:
     @staticmethod
     def read_config(key: SettingKeys):
         return SettingFileService.load_config()[key.value]
+
+    @staticmethod
+    def get_dummy_path() -> str:
+        folder = dirname(abspath(__file__))
+        return str(Path(folder, "dummy.png"))
+

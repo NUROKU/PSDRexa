@@ -24,7 +24,7 @@ class OutputSettingUI:
 
         ttk.Separator(self.root, orient='horizontal').pack(side=tk.TOP, fill=tk.X, pady=5)
 
-        self.check_value = tk.BooleanVar(value= SettingFileService.read_config(SettingKeys.use_fusion_template))
+        self.check_value = tk.BooleanVar(value=SettingFileService.read_config(SettingKeys.use_fusion_template))
         self.check_box = tk.Checkbutton(self.root, text="目パチや口パクが行えるFusionTemmplateとして出力する",
                                         variable=self.check_value, anchor='w', command=self.checkbox_update)
         self.check_box.pack(side=tk.TOP, anchor='w')

@@ -15,8 +15,10 @@ class PartsRepository:
         childs = parts.get_child_object_list_from_psdtop(psd.top)
 
         base_path = Path(SettingFileService.read_config(SettingKeys.image_output_folder))
-        folder_path = base_path / f"{psd.meta.file_name}_{parts.group_name}"
+        folder_path = base_path / parts.get_parent_folder_path(psd.meta)
 
         for child in childs:
-            self._parts_datastore.save_parts(folder_path=folder_path,file_name=f"{child.id_name}.png",image=child.layer_image.image)
+            self._parts_datastore.save_parts(folder_path=folder_path,
+                                             file_name=f"{child.id_name}.png",
+                                             image=child.image_with_background(psd.top.size[0],psd.top.size[1]))
 

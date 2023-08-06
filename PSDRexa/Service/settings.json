@@ -1,5 +1,5 @@
 {
-  "image_output_folder": "C:/git/DaVinciResolve_PSDCharacterExporter/tests/resources/\u7acb\u3061\u7d75\u304d\u308a\u305f\u3093_\u5236\u670d_19",
+  "image_output_folder": "C:/git/DaVinciResolve_PSDCharacterExporter/tests/resources",
   "is_image_size_original": true,
   "image_output_size_x": 800,
   "image_output_size_y": 600,
@@ -8,13 +8,13 @@
   "image_preview_size_y": 600,
   "index_for_output": "1",
   "use_psdtool_func": true,
-  "use_fusion_template": false,
-  "pachi_group_1": "\u304d\u308a\u305f\u3093_0",
-  "pachi_group_2": "\u304d\u308a\u305f\u3093_0",
+  "use_fusion_template": true,
+  "pachi_group_1": "\u4e21\u76ee_299",
+  "pachi_group_2": "\u53e3\u3071\u304f\u3000\u958b\u3044\u305f\u53e3_10",
   "pachi_group_3": "",
   "pachi_group_4": "",
-  "pachi_image_close_1": "\u5f8c\u308d_1",
-  "pachi_image_close_2": "\u5f8c\u308d_1",
+  "pachi_image_close_1": "\u30fc\u3000\u30fc\u3000\u6d99_391",
+  "pachi_image_close_2": "\u2191\u9589\u3058\u305f\u53e3_44",
   "pachi_image_close_3": "",
   "pachi_image_close_4": ""
 }

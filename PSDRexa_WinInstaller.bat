@@ -1,6 +1,7 @@
 @echo off
 set "psdrexafolder=%~dp0PSDRexa"
 set "pyfile=%~dp0PSDRexa.py"
+set "syncerfile=%~dp0PSDRexa_syncer.py"
 set "base1=C:\\ProgramData\\Blackmagic Design\\DaVinci Resolve"
 set "base2=C:\\Users\\%username%\\AppData\\Local\\Blackmagic Design\\DaVinci Resolve"
 
@@ -61,6 +62,12 @@ if exist "%script_folder%\\PSDRexa.py" (
     del /Q PSDRexa.py
 )
 copy /Y "%pyfile%" "%script_folder%"
+if exist "%script_folder%\\PSDRexa_syncer.py" (
+    echo delete old PSDRexa_syncer
+    cd %script_folder%
+    del /Q PSDRexa_syncer.py
+)
+copy /Y "%syncerfile%" "%script_folder%"
 
 echo [end]Install PSDRexa
 

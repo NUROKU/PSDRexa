@@ -38,12 +38,13 @@ class PsdTop:
         return ret_list
 
     def dump_list(self) -> List:
-        # parent iid text visible
+        # OutputSettingUI用の都合のいいやつ、名前変えるべきでは？
         ret_list = []
 
         for layer in self._layer_list:
             layer_parent_id = layer.parent.id_name if layer.parent is not None else ""
             is_child = layer.layer_type_name.endswith("ImageLayer")
+
             ret_list.append(
                 [layer.id_name, layer.viewer_name, layer_parent_id,  is_child])
 

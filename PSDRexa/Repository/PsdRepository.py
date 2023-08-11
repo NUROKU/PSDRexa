@@ -1,5 +1,6 @@
 from pathlib import Path
 
+import Domain.BaseLayerProperties
 from PIL import Image
 from psd_tools.api import layers
 
@@ -35,6 +36,7 @@ class PsdRepository:
 
             psdtool_layer_list = list(psd_file.descendants(include_clip=False))
             domain_layer_list = []
+            BaseLayerProperties.set_id_counter(len(psdtool_layer_list))
 
             ratio = min(SettingFileService.read_config(SettingKeys.image_preview_size_x) / psd_file.size[0],
                         SettingFileService.read_config(SettingKeys.image_preview_size_y) / psd_file.size[1])

@@ -23,5 +23,10 @@ class BaseLayerProperties:
         invalid_chars = ['/', '\\', ':', '*', '?', '"', '<', '>', '|']
         for char in invalid_chars:
             name = name.replace(char, '_')
-        self.id_name = f"{name}_{BaseLayerProperties.__id_counter}"
-        BaseLayerProperties.__id_counter += 1
+        self.id_name = f"{BaseLayerProperties.__id_counter:04d}_{name}"
+        BaseLayerProperties.__id_counter -= 1
+
+    @classmethod
+    def set_id_counter(cls, counter_id: int):
+        BaseLayerProperties.__id_counter = counter_id
+

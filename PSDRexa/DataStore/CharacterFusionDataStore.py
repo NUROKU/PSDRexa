@@ -50,8 +50,8 @@ class CharacterFusionDataStore:
             'trackIndex': index,
             'recordFrame': max_right_offset
         }])
-
         fusion_list = psdrexa_item[0].GetFusionCompByIndex(1).GetToolList()
+
         for f in fusion_list.values():
             if f.GetAttrs('TOOLS_Name') == "Loader_mouseopen":
                 f.Clip = str(kuchipaku_open)
@@ -64,22 +64,5 @@ class CharacterFusionDataStore:
             if f.GetAttrs('TOOLS_Name') == "Loader_sotai":
                 f.Clip = str(sotai)
 
-    def update_character_fusion(self, character_image_file_path: Path):
-        project_manager = resolve.GetProjectManager()
-        project = project_manager.GetCurrentProject()
-        timeline = project.GetCurrentTimeline()
-        # GetCurrentVideoItemの場合、Timelineの一番上のアイテムが取得される
-        timeline_item = timeline.GetCurrentVideoItem()
-        fusion_list = timeline_item.GetFusionCompByIndex(1).GetToolList()
-
-        psd_loader = None
-        for f in fusion_list.values():
-            if f.GetAttrs('TOOLS_Name') == "PSDLoader":
-                psd_loader = f
-
-        if psd_loader is None:
-            raise DataStoreError("PSDLoader not found")
-
-        psd_loader.Clip = str(character_image_file_path)
 
 

@@ -6,6 +6,7 @@ from tkinter import messagebox, filedialog
 
 from Persenter.OutputCharacterPresenter import OutputCharacterPresenter
 from Persenter.SaveCompositedImagePersenter import SaveCompositedImagePersenter
+from Service.PSDRexaTemplateService import PSDRexaTemplateService
 from Service.ResolveService import ResolveService
 from Service.SettingFileService import SettingKeys, SettingFileService
 from UI.CompositedImageCanvas import CompositedImageCanvas
@@ -38,6 +39,10 @@ class MainUI:
 
         def settings():
             self.setting_window.execute()
+
+        # initだしここでもいいのかな、いや別にすべきでは・・・？
+        PSDRexaTemplateService.init_template()
+        #messagebox.showerror("error", "DaVinci Resolveの読み込みに失敗しました")
 
         root = tk.Tk()
         root.title("PSDRexa")

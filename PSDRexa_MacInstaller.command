@@ -2,6 +2,7 @@
 
 psdrexafolder="$(dirname $0)/PSDRexa"
 pyfile="$(dirname $0)/PSDRexa.py"
+syncerfile="$(dirname $0)/PSDRexa_syncer.py"
 base1="/Library/Application Support/Blackmagic Design/DaVinci Resolve"
 base2="$HOME/Library/Application Support/Blackmagic Design/DaVinci Resolve"
 
@@ -30,28 +31,36 @@ else
     exit
 fi
 
-if [ -d "$module_folder/PSDCharacterExporter" ]; then
-    echo "delete old PSDCharacterExporter Directory."
-    rm -rf "$module_folder/PSDCharacterExporter"
-fi
+# if [ -d "$module_folder/PSDCharacterExporter" ]; then
+#     echo "delete old PSDCharacterExporter Directory."
+#     rm -rf "$module_folder/PSDCharacterExporter"
+# fi
+
 if [ -d "$module_folder/PSDRexa" ]; then
     echo "delete old PSDRexa Directory."
     rm -rf "$module_folder/PSDRexa"
 fi
-
 cp -R "$psdrexafolder" "$module_folder/PSDRexa"
+
+
 cd "$module_folder/PSDRexa"
 pip3 install -r requirements.txt --target module
 
-if [ -f "$script_folder/PSDCharacterExporter.py" ]; then
-    echo "delete old PSDCharacterExporter."
-    rm "$script_folder/PSDCharacterExporter.py"
-fi
+# if [ -f "$script_folder/PSDCharacterExporter.py" ]; then
+#     echo "delete old PSDCharacterExporter."
+#     rm "$script_folder/PSDCharacterExporter.py"
+# fi
 if [ -f "$script_folder/PSDRexa.py" ]; then
     echo "delete old PSDRexa."
     rm "$script_folder/PSDRexa.py"
 fi
 cp "$pyfile" "$script_folder"
+
+if [ -f "$script_folder/PSDRexa_syncer.py" ]; then
+    echo "delete old PSDRexa_syncer."
+    rm "$script_folder/PSDRexa_syncer.py"
+fi
+cp "$syncerfile" "$script_folder"
 
 echo "[end]Install PSDRexa"
 

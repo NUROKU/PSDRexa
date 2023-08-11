@@ -6,6 +6,7 @@ from DataStore.ResolveBinDatastore import ResolveBinDatastore
 from Domain.DTO.CharacterPartsSet import CharacterPartsSet
 from Domain.DTO.CompositedImage import CompositedImage
 from Domain.Psd.PsdMeta import PsdMeta
+from Service.OutputSettingFileService import OutputSettingKeys, OutputSettingFileService
 from Service.SettingFileService import SettingFileService, SettingKeys
 
 
@@ -31,20 +32,20 @@ class PSDRexaFusionRepository:
         for ignore in composited_image.ignored_list:
             ignore_id = ignore["id"]
             ignore_parent_id = ignore["parent"]
-            if ignore_parent_id == SettingFileService.read_config(SettingKeys.pachi_group_1):
+            if ignore_parent_id == OutputSettingFileService.read_config(OutputSettingKeys.pachi_group_1):
                 mepachi_open = save_path_folder / eye_parts.get_parent_folder_path(psdmeta) / f"{ignore_id}.png"
-                mepachi_close = save_path_folder / eye_parts.get_parent_folder_path(psdmeta) / f"{SettingFileService.read_config(SettingKeys.pachi_image_close_1)}.png"
-            if ignore_parent_id == SettingFileService.read_config(SettingKeys.pachi_group_2):
+                mepachi_close = save_path_folder / eye_parts.get_parent_folder_path(psdmeta) / f"{OutputSettingFileService.read_config(OutputSettingKeys.pachi_image_close_1)}.png"
+            if ignore_parent_id == OutputSettingFileService.read_config(OutputSettingKeys.pachi_group_2):
                 kuchipaku_open = save_path_folder / mouse_parts.get_parent_folder_path(psdmeta) / f"{ignore_id}.png"
-                kuchipaku_close = save_path_folder / mouse_parts.get_parent_folder_path(psdmeta) / f"{SettingFileService.read_config(SettingKeys.pachi_image_close_2)}.png"
+                kuchipaku_close = save_path_folder / mouse_parts.get_parent_folder_path(psdmeta) / f"{OutputSettingFileService.read_config(OutputSettingKeys.pachi_image_close_2)}.png"
 
         for ignore in composited_image.not_ignored_list:
             ignore_id = ignore["id"]
             ignore_parent_id = ignore["parent"]
-            if ignore_parent_id == SettingFileService.read_config(SettingKeys.pachi_group_1):
+            if ignore_parent_id == OutputSettingFileService.read_config(OutputSettingKeys.pachi_group_1):
                 mepachi_open = save_path_folder / eye_parts.get_parent_folder_path(psdmeta) / f"{ignore_id}.png"
                 mepachi_close = save_path_folder / eye_parts.get_parent_folder_path(psdmeta) / f"{ignore_id}.png"
-            if ignore_parent_id == SettingFileService.read_config(SettingKeys.pachi_group_2):
+            if ignore_parent_id == OutputSettingFileService.read_config(OutputSettingKeys.pachi_group_2):
                 kuchipaku_open = save_path_folder / mouse_parts.get_parent_folder_path(psdmeta) / f"{ignore_id}.png"
                 kuchipaku_close = save_path_folder / mouse_parts.get_parent_folder_path(psdmeta) / f"{ignore_id}.png"
 

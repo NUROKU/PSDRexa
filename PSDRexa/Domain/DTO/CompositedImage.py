@@ -5,6 +5,7 @@ from PIL import Image, ImageChops
 import numpy as np
 from Common import Logger
 from Domain.Psd.PsdTop import PsdTop
+from Service.OutputSettingFileService import OutputSettingFileService, OutputSettingKeys
 from Service.SettingFileService import SettingFileService, SettingKeys
 
 logger = Logger.get_logger(__name__)
@@ -28,7 +29,7 @@ class CompositedImage:
 
         self._id = id
         if id is None:
-            self._id = datetime.now().strftime('img_%Y%m%d_%H%M%S')
+            self._id = datetime.now().strftime('img_%Y%m%d_%H%M%S_PSDRexa')
 
     @property
     def image(self) -> Image:
@@ -63,10 +64,10 @@ class CompositedImage:
     def _create_composited_image(self, top_group_layer: PsdTop, is_for_preview: bool):
         composited_image = Image.new("RGBA", self._layer_image_size, (255, 255, 255, 0))
         ignore_list = [
-            SettingFileService.read_config(SettingKeys.pachi_group_1),
-            SettingFileService.read_config(SettingKeys.pachi_group_2),
-            SettingFileService.read_config(SettingKeys.pachi_group_3),
-            SettingFileService.read_config(SettingKeys.pachi_group_4)
+            OutputSettingFileService.read_config(OutputSettingKeys.pachi_group_1),
+            OutputSettingFileService.read_config(OutputSettingKeys.pachi_group_2),
+            OutputSettingFileService.read_config(OutputSettingKeys.pachi_group_3),
+            OutputSettingFileService.read_config(OutputSettingKeys.pachi_group_4)
         ]
 
         for layer in top_group_layer.image_layer_list:

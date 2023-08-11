@@ -4,6 +4,7 @@ from pathlib import Path
 from tkinter import ttk, filedialog, messagebox
 
 from PIL import Image, ImageTk
+from Service.OutputSettingFileService import OutputSettingFileService
 from ttkwidgets import CheckboxTreeview
 from ttkwidgets.checkboxtreeview import IM_CHECKED, IM_UNCHECKED, IM_TRISTATE
 
@@ -51,6 +52,7 @@ class LayerTreeview(CheckboxTreeview):
 
         try:
             file_path = Path(filedialog.askopenfilename(title="PSDファイルを選択してください",filetypes=[('psdファイル', '*.psd')]))
+            OutputSettingFileService.init_output_setting(os.path.splitext(os.path.basename(file_path))[0])
             tree_list = self._layer_list_presenter.get_layer_list(file_path)
 
             for tree_item in tree_list:
@@ -181,3 +183,33 @@ class LayerTreeview(CheckboxTreeview):
                 self._turn_on(item)
 
             self._update_canvas()
+
+    def get_all_item(self, only_group=False):
+        items = []
+        def get_childrens(item):
+            ch = self.get_children(item)
+            if not (ch is () and only_group):
+                items.append(item)
+            for c in ch:
+                get_childrens(c)
+
+        ch = self.get_children("")
+        for c in ch:
+            get_childrens(c)
+
+        return items
+
+    def get_all_item_viewer_name(self, only_group=False):
+        items = []
+        def get_childrens(item):
+            ch = self.get_children(item)
+            if not (ch is () and only_group):
+                items.append(self.item(item)["text"])
+            for c in ch:
+                get_childrens(c)
+
+        ch = self.get_children("")
+        for c in ch:
+            get_childrens(c)
+        return items
+

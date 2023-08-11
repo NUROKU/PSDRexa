@@ -6,11 +6,13 @@ from tkinter import messagebox, filedialog
 
 from Persenter.OutputCharacterPresenter import OutputCharacterPresenter
 from Persenter.SaveCompositedImagePersenter import SaveCompositedImagePersenter
+from Service.PSDRexaTemplateService import PSDRexaTemplateService
 from Service.ResolveService import ResolveService
 from Service.SettingFileService import SettingKeys, SettingFileService
 from UI.CompositedImageCanvas import CompositedImageCanvas
 from UI.SettingWindow import SettingWindow
 from UI.layerTreeView import LayerTreeview
+from UI.OutputSettingUI import OutputSettingUI
 
 
 class MainUI:
@@ -28,19 +30,19 @@ class MainUI:
                 messagebox.showerror("error", e.__str__())
 
         def set_local_folder():
-            try:
-                # TODO ここ別んとこに出しときたいなあ
-                directory_path = filedialog.askdirectory()
-                if directory_path != "":
-                    SettingFileService.update_and_save_config(SettingKeys.image_output_folder, directory_path)
-                    directory_label.config(text=directory_path)
-            except Exception as e:
-                messagebox.showerror("error", e.__str__())
+            output_setting_ui = OutputSettingUI()
+            output_setting_ui.run()
+            # directory_label_text.set("")
+
         def set_output_index(*args):
             SettingFileService.update_and_save_config(SettingKeys.index_for_output, spinbox_var.get())
 
         def settings():
             self.setting_window.execute()
+
+        # initだしここでもいいのかな、いや別にすべきでは・・・？
+        PSDRexaTemplateService.init_template()
+        #messagebox.showerror("error", "DaVinci Resolveの読み込みに失敗しました")
 
         root = tk.Tk()
         root.title("PSDRexa")
@@ -57,10 +59,12 @@ class MainUI:
         settings_frame1 = tk.Frame(root)
         btn3 = tkinter.Button(settings_frame1, text='設定', command=settings, width=5)
         btn3.pack(side="left", padx=5, pady=5, anchor=tk.W)
-        btn4 = tk.Button(settings_frame1, text="出力先", command=set_local_folder)
+        btn4 = tk.Button(settings_frame1, text="出力先/口パク目パチ設定", command=set_local_folder)
         btn4.pack(side="left", padx=5, pady=5, anchor=tk.W)
+        directory_label_text = tk.StringVar()
         directory_label = tk.Label(settings_frame1,
-                                   text=SettingFileService.read_config(SettingKeys.image_output_folder))
+                                   textvariable=directory_label_text)
+        directory_label_text.set("")
         directory_label.pack(side="left", padx=5, pady=5, anchor=tk.W)
         settings_frame1.pack(side="top", anchor=tk.W)
 

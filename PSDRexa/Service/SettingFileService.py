@@ -17,7 +17,6 @@ class SettingKeys(Enum):
     index_for_output = "index_for_output"
     use_psdtool_func = "use_psdtool_func"
 
-
 class SettingFileService:
     json_path = ""
     config_dict = None
@@ -43,7 +42,7 @@ class SettingFileService:
             return SettingFileService.config_dict
 
     @staticmethod
-    def update_and_save_config(key: SettingKeys, value: str):
+    def update_and_save_config(key: SettingKeys, value):
         config = SettingFileService.load_config()
         config[key.value] = value
         SettingFileService.config_dict = config
@@ -64,3 +63,9 @@ class SettingFileService:
     @staticmethod
     def read_config(key: SettingKeys):
         return SettingFileService.load_config()[key.value]
+
+    @staticmethod
+    def get_dummy_path() -> str:
+        folder = dirname(abspath(__file__))
+        return str(Path(folder, "dummy.png"))
+

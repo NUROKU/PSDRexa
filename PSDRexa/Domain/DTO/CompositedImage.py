@@ -4,33 +4,44 @@ from PIL import Image, ImageChops
 
 import numpy as np
 from Common import Logger
-from Domain.Psd.PsdTopGroupLayer import PsdTopGroupLayer
+from Domain.Psd.PsdTop import PsdTop
+from Service.OutputSettingFileService import OutputSettingFileService, OutputSettingKeys
 from Service.SettingFileService import SettingFileService, SettingKeys
 
 logger = Logger.get_logger(__name__)
 
 
 class CompositedImage:
-    def __init__(self, top_group_layer: PsdTopGroupLayer, is_for_preview: bool = False, id: str = None):
+    def __init__(self, top_group_layer: PsdTop, is_for_preview: bool = False, id: str = None, ignore_group= False):
         self._layer_image_size = top_group_layer.size
         self._ratio = 1.0
+        self._ignore_group = ignore_group
 
         if is_for_preview and SettingFileService.read_config(SettingKeys.is_image_preview_size_original) is False:
             self._layer_image_size = (SettingFileService.read_config(SettingKeys.image_preview_size_x),
                                       SettingFileService.read_config(SettingKeys.image_preview_size_y))
             self._ratio = min(self._layer_image_size[0] / top_group_layer.size[0],
                               self._layer_image_size[1] / top_group_layer.size[1])
-
+        self._ignored_list = []
+        self._not_ignored_list = []
         self._composited_image = self._create_composited_image(top_group_layer=top_group_layer,
                                                               is_for_preview=is_for_preview)
 
         self._id = id
         if id is None:
-            self._id = datetime.now().strftime('img_%Y%m%d_%H%M%S')
+            self._id = datetime.now().strftime('img_%Y%m%d_%H%M%S_PSDRexa')
 
     @property
     def image(self) -> Image:
         return self._composited_image
+
+    @property
+    def ignored_list(self):
+        return self._ignored_list
+
+    @property
+    def not_ignored_list(self):
+        return self._not_ignored_list
 
     @property
     def id(self) -> str:
@@ -50,11 +61,26 @@ class CompositedImage:
 
         return resized_image
 
-    def _create_composited_image(self, top_group_layer: PsdTopGroupLayer, is_for_preview: bool):
+    def _create_composited_image(self, top_group_layer: PsdTop, is_for_preview: bool):
         composited_image = Image.new("RGBA", self._layer_image_size, (255, 255, 255, 0))
+        ignore_list = [
+            OutputSettingFileService.read_config(OutputSettingKeys.pachi_group_1),
+            OutputSettingFileService.read_config(OutputSettingKeys.pachi_group_2),
+            OutputSettingFileService.read_config(OutputSettingKeys.pachi_group_3),
+            OutputSettingFileService.read_config(OutputSettingKeys.pachi_group_4)
+        ]
 
         for layer in top_group_layer.image_layer_list:
             if layer.is_visible:
+
+                # 除外のやつ
+                if self._ignore_group:
+                    if layer.parent.id_name in ignore_list:
+                        self._ignored_list.append({"id":layer.id_name, "parent":layer.parent.id_name})
+                        continue
+                    else:
+                        self._not_ignored_list.append({"id": layer.id_name, "parent": layer.parent.id_name})
+
                 if is_for_preview and SettingFileService.read_config(SettingKeys.is_image_preview_size_original) is False:
                     offset = (int(layer.offset[0] * self._ratio), int(layer.offset[1] * self._ratio))
                     additional_image = layer.layer_image.previewed_image

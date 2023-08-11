@@ -1,5 +1,6 @@
 from pathlib import Path
 
+import Domain.BaseLayerProperties
 from PIL import Image
 from psd_tools.api import layers
 
@@ -12,7 +13,7 @@ from Domain.ImageLayer.ImageLayer import ImageLayer
 from Domain.ImageLayer.OneSelectImageLayer import OneSelectImageLayer
 from Domain.Psd.Psd import Psd
 from Domain.Psd.PsdMeta import PsdMeta
-from Domain.Psd.PsdTopGroupLayer import PsdTopGroupLayer
+from Domain.Psd.PsdTop import PsdTop
 from DataStore.PsdDataStore import PsdDataStore
 from Exception.DataStoreError import DataStoreError
 from Exception.RepositoryError import RepositoryError
@@ -31,11 +32,11 @@ class PsdRepository:
         # TODO Flipのやつ対応できてない、あれgroupにもあるらしい
         try:
             psd_file = self._psd_datastore.get_psd(psd_file_path=psd_file_path)
-
             psd_meta = PsdMeta(file_path=psd_file_path)
 
             psdtool_layer_list = list(psd_file.descendants(include_clip=False))
             domain_layer_list = []
+            BaseLayerProperties.set_id_counter(len(psdtool_layer_list))
 
             ratio = min(SettingFileService.read_config(SettingKeys.image_preview_size_x) / psd_file.size[0],
                         SettingFileService.read_config(SettingKeys.image_preview_size_y) / psd_file.size[1])
@@ -67,7 +68,7 @@ class PsdRepository:
             add_childs_for_group(domain_layer_list)
             top_base_properties = BaseLayerProperties(name="top", size=psd_file.size, offset=psd_file.offset,
                                                       visible=True, layer_image=None)
-            top_layer_groups = PsdTopGroupLayer(base_layer_properties=top_base_properties, layer_list=domain_layer_list)
+            top_layer_groups = PsdTop(base_layer_properties=top_base_properties, layer_list=domain_layer_list)
 
             return Psd(psd_meta=psd_meta, psd_top_layer_group=top_layer_groups)
         except DataStoreError as e:

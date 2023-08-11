@@ -9,5 +9,5 @@ class SaveCompositedImage:
 
     def execute(self):
         psd = PsdMemorySaverService.get_psd()
-        composited_image = CompositedImage(psd.top_layer_group, is_for_preview=False)
+        composited_image = CompositedImage(psd.top, is_for_preview=False)
         self._composited_image_rep.save_composited_image(composited_image)

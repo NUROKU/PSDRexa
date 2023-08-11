@@ -42,3 +42,11 @@ class LayerImage:
         resized_image = image.resize(resize_size)
 
         return resized_image
+
+    def image_with_background(self, size_width: int, size_height: int , offset_x:int, offset_y:int):
+        background_image = Image.new("RGBA", (size_width,size_height), (255, 255, 255, 0))
+
+        c = Image.new('RGBA', (size_width,size_height), (255, 255, 255, 0))
+        c.paste(self._image, (offset_x,offset_y))
+        return Image.alpha_composite(background_image, c)
+

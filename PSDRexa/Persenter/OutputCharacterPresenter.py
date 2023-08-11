@@ -1,9 +1,16 @@
-from Usecase.OutputCharactor import OutputCharacter
+from Service.OutputSettingFileService import OutputSettingFileService, OutputSettingKeys
+from Service.SettingFileService import SettingFileService, SettingKeys
+from Usecase.OutputCharacterFusion import OutputCharacterFusion
+from Usecase.OutputCompositedImage import OutpuCompositedImage
 
 
 class OutputCharacterPresenter:
     def __init__(self):
-        self._character_usecase = OutputCharacter()
+        self._composed_usecase = OutpuCompositedImage()
+        self._character_fusion_usecase = OutputCharacterFusion()
 
     def output_character(self):
-        self._character_usecase.execute()
+        if OutputSettingFileService.read_config(OutputSettingKeys.use_fusion_template):
+            self._character_fusion_usecase.execute()
+        else:
+            self._composed_usecase.execute()

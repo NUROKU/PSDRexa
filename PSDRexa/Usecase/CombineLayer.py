@@ -17,7 +17,7 @@ class CombineLayer:
         psd = PsdMemorySaverService.get_psd()
 
         if psd is not None:
-            composited_image = CompositedImage(psd.top_layer_group, is_for_preview=True)
+            composited_image = CompositedImage(psd.top, is_for_preview=True)
             return composited_image.resized_image(size_x, size_y)
         else:
             # dummy

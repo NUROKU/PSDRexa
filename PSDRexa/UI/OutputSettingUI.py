@@ -2,7 +2,7 @@ import tkinter
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
 
-from Service.OutputSettingFileService import OutputSettingFileService, OutputSettingKeys
+from Service.OutputSettingFile.OutputSettingFileService import OutputSettingFileService, OutputSettingKeys
 from Service.SettingFileService import SettingKeys, SettingFileService
 from Service.PsdMemorySaverService import PsdMemorySaverService
 from Persenter.InitPartsPersenter import InitPartsPresenter
@@ -106,6 +106,9 @@ class OutputSettingUI:
         button_save.pack(side=tk.LEFT, padx=5)
 
     def on_select(self, event):
+        if len(self.list_box.curselection()) == 0:
+            return
+
         # Get selected line index
         index = self.list_box.curselection()[0]
         # Get the line's text

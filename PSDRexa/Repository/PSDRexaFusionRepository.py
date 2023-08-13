@@ -1,4 +1,3 @@
-import os
 from pathlib import Path
 
 from DataStore.CharacterFusionDataStore import CharacterFusionDataStore
@@ -6,7 +5,7 @@ from DataStore.ResolveBinDatastore import ResolveBinDatastore
 from Domain.DTO.CharacterPartsSet import CharacterPartsSet
 from Domain.DTO.CompositedImage import CompositedImage
 from Domain.Psd.PsdMeta import PsdMeta
-from Service.OutputSettingFileService import OutputSettingKeys, OutputSettingFileService
+from Service.OutputSettingFile.OutputSettingFileService import OutputSettingKeys, OutputSettingFileService
 from Service.SettingFileService import SettingFileService, SettingKeys
 
 

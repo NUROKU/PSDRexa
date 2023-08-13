@@ -89,5 +89,5 @@ class OutputSettingFileService:
     @staticmethod
     def get_dummy_path() -> str:
         folder = dirname(abspath(__file__))
-        return str(Path(folder, "dummy.png"))
+        return str(Path(folder, "../dummy.png"))
 

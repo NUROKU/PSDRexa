@@ -1,10 +1,9 @@
 import os
-import time
 from pathlib import Path
 from tkinter import ttk, filedialog, messagebox
 
-from PIL import Image, ImageTk
-from Service.OutputSettingFileService import OutputSettingFileService
+from PIL import Image
+from Service.OutputSettingFile.OutputSettingFileService import OutputSettingFileService
 from ttkwidgets import CheckboxTreeview
 from ttkwidgets.checkboxtreeview import IM_CHECKED, IM_UNCHECKED, IM_TRISTATE
 

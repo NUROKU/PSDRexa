@@ -2,10 +2,9 @@ from datetime import datetime
 
 from PIL import Image, ImageChops
 
-import numpy as np
 from Common import Logger
 from Domain.Psd.PsdTop import PsdTop
-from Service.OutputSettingFileService import OutputSettingFileService, OutputSettingKeys
+from Service.OutputSettingFile.OutputSettingFileService import OutputSettingFileService, OutputSettingKeys
 from Service.SettingFileService import SettingFileService, SettingKeys
 
 logger = Logger.get_logger(__name__)
@@ -72,9 +71,8 @@ class CompositedImage:
 
         for layer in top_group_layer.image_layer_list:
             if layer.is_visible:
-
                 # 除外のやつ
-                if self._ignore_group:
+                if self._ignore_group and layer.parent is not None:
                     if layer.parent.id_name in ignore_list:
                         self._ignored_list.append({"id":layer.id_name, "parent":layer.parent.id_name})
                         continue

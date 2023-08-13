@@ -3,6 +3,10 @@ import struct
 import os
 import tkinter as tk
 
+from PSDRexaSyncer.BaseSyncer import BaseSyncer
+from PSDRexaSyncer.Syncer2 import Syncer2
+
+
 class PSDRexaSyncerUI:
     def __init__(self,fu,bmd,resolve):
         self._resolve = resolve
@@ -49,96 +53,28 @@ class PSDRexaSyncerUI:
 
     def StartSync(self,ev):
 
+        audio_folder_path = self._window.Find('AudioFolderPath').Text
+        video_index = self._window.Find('VideoTrackInput').Value
+        audio_index = self._window.Find('AudioTrackInput').Value
 
-            def init(video_tracks):
-                # PSDRexaの初期化
-                for video in video_tracks:
-                    if video.GetName() == "PSDRexa":
-                        video_len = video.GetDuration()
-                        fusion_obj = video.GetFusionCompByIndex(1).FindTool("CustomTool1")
-                        fusion_obj.CurrentTime = 0
-                        index = 0
-                        for _ in range(0, video_len):
-                            fusion_obj.NumberIn2[index] = 0
-                            index += 1
+        if audio_folder_path == "":
+            self._window.Find('ResuktLabel').Text = f"Please set audio_file_path"
+            return
 
-            def create_tasks(video_tracks, audio_tracks):
-                # 効率悪いけど動けばまあ。うん
-                    tasks = []
-                    for video in video_tracks:
-                        overlaps_for_item = []
-                        for audio in audio_tracks:
-                            if max(video.GetStart(), audio.GetStart()) < min(video.GetEnd(), audio.GetEnd()):
-                                start_diff = audio.GetStart() - video.GetStart()
-                                overlap = (audio.GetName(), start_diff)
-                                overlaps_for_item.append(overlap)
-                        if overlaps_for_item:
-                            tasks.append((video, overlaps_for_item))
-                    return tasks
+        project_manager = self._resolve.GetProjectManager()
+        project = project_manager.GetCurrentProject()
+        timeline = project.GetCurrentTimeline()
+        video_tracks = timeline.GetItemListInTrack("video", video_index)
+        audio_tracks = timeline.GetItemListInTrack("audio", audio_index)
 
-                def sync_mouse(task, framerate):
-                    if task[0].GetName() != "PSDRexa":
-                        return
+        tasks = BaseSyncer.create_tasks(video_tracks, audio_tracks)
+        frame_rate = int(timeline.GetSetting('timelineFrameRate'))
+        syncer = Syncer2(audio_folder_path=audio_folder_path, frame_rate=frame_rate)
+        syncer.sync_tasks(tasks)
 
-                    audio_wav = [0.0] * task[0].GetDuration()
-                    for audio in task[1]:
-                        with wave.open(os.path.join(audio_file_path, audio[0]), 'rb') as wav_file:
-                            params = wav_file.getparams()
+        self._window.Find('ResuktLabel').Text = f"Done"
 
-                            # このあたり某人工知能に聞いた
-                            frames = wav_file.readframes(params.nframes)
-                            unpacked_frames = struct.unpack('<' + 'h' * params.nframes, frames)
-                            volumes = [abs(amplitude) for amplitude in unpacked_frames]
 
-                            frame_length = params.framerate // framerate
-                            frames_volumes = [sum(volumes[i:i + frame_length]) / frame_length for i in
-                                              range(0, len(volumes), frame_length)]
-
-                            index = audio[1]
-                            if audio[1] < 0:
-                                del frames_volumes[:abs(audio[1])]
-                                index = 0
-                            audio_wav[index:len(frames_volumes)] = frames_volumes
-
-                    fusion_obj = task[0].GetFusionCompByIndex(1).FindTool("CustomTool1")
-                    fusion_obj.CurrentTime = 0
-                    index = 0
-                    for _ in range(0, len(audio_wav)):
-                        fusion_obj.NumberIn2[index] = audio_wav[index]
-                        index += 1
-
-            audio_file_path = self._window.Find('AudioFolderPath').Text
-            video_index = self._window.Find('VideoTrackInput').Value
-            audio_index = self._window.Find('AudioTrackInput').Value
-
-            if audio_file_path == "":
-                self._window.Find('ResuktLabel').Text = f"Please set audio_file_path"
-                return
-
-            projectManager = self._resolve.GetProjectManager()
-            project = projectManager.GetCurrentProject()
-            timeline = project.GetCurrentTimeline()
-            video_tracks = timeline.GetItemListInTrack("video", video_index)
-            audio_tracks = timeline.GetItemListInTrack("audio", audio_index)
-
-            init(video_tracks)
-            tasks = create_tasks(video_tracks, audio_tracks)
-            framerate = int(timeline.GetSetting('timelineFrameRate'))
-
-            succeed = 0
-            failed = 0
-            for task in tasks:
-                try:
-                    sync_mouse(task, framerate)
-                    succeed = succeed + 1
-                except Exception as e:
-                    failed = failed + 1
-                    continue
-
-            if failed == 0:
-                self._window.Find('ResuktLabel').Text = f"{succeed} file succeed."
-            else:
-                self._window.Find('ResuktLabel').Text = f"{succeed} file succeed. {failed} file failed"
 
 
 

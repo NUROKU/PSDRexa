@@ -2,8 +2,10 @@
 set "psdrexafolder=%~dp0PSDRexa"
 set "pyfile=%~dp0PSDRexa.py"
 set "syncerfile=%~dp0PSDRexa_syncer.py"
+set "dummyfile=%~dp0dummy.png"
 set "base1=C:\\ProgramData\\Blackmagic Design\\DaVinci Resolve"
 set "base2=C:\\Users\\%username%\\AppData\\Local\\Blackmagic Design\\DaVinci Resolve"
+set "base3=C:\\Users\\%username%\\AppData\\Roaming\\Blackmagic Design\\DaVinci Resolve\\Support\\Fusion\\Settings"
 
 python --version >nul 2>&1
 if errorlevel 1 (
@@ -68,6 +70,8 @@ if exist "%script_folder%\\PSDRexa_syncer.py" (
     del /Q PSDRexa_syncer.py
 )
 copy /Y "%syncerfile%" "%script_folder%"
+
+copy /Y "%dummyfile%" "%base3%"
 
 echo [end]Install PSDRexa
 

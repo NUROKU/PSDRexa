@@ -27,7 +27,7 @@ class MainUI:
             try:
                 self.out_pre.output_character()
             except Exception as e:
-                messagebox.showerror("error", e.__str__())
+                messagebox.showerror("error", e)
 
         def set_local_folder():
             output_setting_ui = OutputSettingUI()

@@ -30,10 +30,10 @@ class BaseSyncer:
                 fusion_obj.CurrentTime = 0
                 index = 0
                 for _ in range(0, video_len):
-                    fusion_obj.NumberIn1[index] = 0
+                    # fusion_obj.NumberIn1[index] = 0
                     fusion_obj.NumberIn2[index] = 0
-                    fusion_obj.NumberIn3[index] = 0
-                    fusion_obj.NumberIn4[index] = 0
+                    # fusion_obj.NumberIn3[index] = 0
+                    # fusion_obj.NumberIn4[index] = 0
                     index += 1
 
     @staticmethod
@@ -48,7 +48,7 @@ class BaseSyncer:
             for audio in audio_items:
                 if max(video.GetStart(), audio.GetStart()) < min(video.GetEnd(), audio.GetEnd()):
                     start_diff = audio.GetStart() - video.GetStart()
-                    audio_clip = SyncerAudioClip(audio, audio.GetDuration(), start_diff)
+                    audio_clip = SyncerAudioClip(audio, duration=audio.GetDuration(), start_diff=start_diff)
                     clip_list.append(audio_clip)
 
             tasks.append(SyncTask(video, clip_list))

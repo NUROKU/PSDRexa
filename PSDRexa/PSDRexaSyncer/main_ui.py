@@ -26,7 +26,7 @@ class PSDRexaSyncerUI:
             self._ui.Button({"ID": "AudioFolderPathButton", "Text": "Select Folder", "Geometry": [120, 90, 100, 30]}),
             self._ui.LineEdit({'ID': 'AudioFolderPath', 'Text': "", "Geometry": [10, 130, 350, 30]}),
             self._ui.Button({"ID": "SyncButton", "Text": "Start Sync", "Geometry": [10, 170, 100, 30]}),
-            self._ui.Label({"ID": "ResuktLabel", "Text": "-", "Geometry": [120, 170, 150, 30]}),
+            self._ui.Label({"ID": "ResultLabel", "Text": "-", "Geometry": [120, 170, 150, 30]}),
 
         ]
 
@@ -58,7 +58,7 @@ class PSDRexaSyncerUI:
         audio_index = self._window.Find('AudioTrackInput').Value
 
         if audio_folder_path == "":
-            self._window.Find('ResuktLabel').Text = f"Please set audio_file_path"
+            self._window.Find('ResultLabel').Text = f"Please set audio_file_path"
             return
 
         project_manager = self._resolve.GetProjectManager()
@@ -70,9 +70,11 @@ class PSDRexaSyncerUI:
         tasks = BaseSyncer.create_tasks(video_tracks, audio_tracks)
         frame_rate = int(timeline.GetSetting('timelineFrameRate'))
         syncer = Syncer2(audio_folder_path=audio_folder_path, frame_rate=frame_rate)
+
+        BaseSyncer.init_video_items(video_tracks)
         syncer.sync_tasks(tasks)
 
-        self._window.Find('ResuktLabel').Text = f"Done"
+        self._window.Find('ResultLabel').Text = f"Done"
 
 
 

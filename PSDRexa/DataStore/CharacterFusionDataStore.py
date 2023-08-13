@@ -1,6 +1,8 @@
 from pathlib import Path
 
 from Exception.DataStoreError import DataStoreError
+from PSDRexaSyncer.SyncTask import SyncTask
+from PSDRexaSyncer.Syncer1 import Syncer1
 from Service.ResolveService import ResolveService
 from Service.SettingFileService import SettingFileService, SettingKeys
 
@@ -64,5 +66,5 @@ class CharacterFusionDataStore:
             if f.GetAttrs('TOOLS_Name') == "Loader_sotai":
                 f.Clip = str(sotai)
 
-
-
+        syncer = Syncer1("", 0)
+        syncer.sync_tasks(tasks=[SyncTask(video_item=psdrexa_item[0], sync_audio_clip_list=[])])

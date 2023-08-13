@@ -33,7 +33,6 @@ class Syncer2(BaseSyncer):
         fusion_obj.CurrentTime = 0
         index = 0
 
-
         for _ in range(0, len(audio_wav)):
             fusion_obj.NumberIn2[index] = audio_wav[index]
             index += 1

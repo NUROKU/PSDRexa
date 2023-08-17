@@ -4,6 +4,7 @@ import os
 import tkinter as tk
 
 from PSDRexaSyncer.BaseSyncer import BaseSyncer
+from PSDRexaSyncer.Syncer1 import Syncer1
 from PSDRexaSyncer.Syncer2 import Syncer2
 
 
@@ -25,16 +26,18 @@ class PSDRexaSyncerUI:
             self._ui.Label({"ID": "AudioFolderPathLabel", "Text": "Audio Folder Path", "Geometry": [10, 90, 100, 30]}),
             self._ui.Button({"ID": "AudioFolderPathButton", "Text": "Select Folder", "Geometry": [120, 90, 100, 30]}),
             self._ui.LineEdit({'ID': 'AudioFolderPath', 'Text': "", "Geometry": [10, 130, 350, 30]}),
-            self._ui.Button({"ID": "SyncButton", "Text": "Start Sync", "Geometry": [10, 170, 100, 30]}),
-            self._ui.Label({"ID": "ResultLabel", "Text": "-", "Geometry": [120, 170, 150, 30]}),
-
+            self._ui.Button({"ID": "Sync2Button", "Text": "口パクSync", "Geometry": [10, 170, 100, 30]}),
+            self._ui.Label({"ID": "Result2Label", "Text": "-", "Geometry": [120, 170, 150, 30]}),
+            self._ui.Button({"ID": "Sync1Button", "Text": "目パチSync", "Geometry": [10, 210, 100, 30]}),
+            self._ui.Label({"ID": "Result1Label", "Text": "-", "Geometry": [120, 210, 150, 30]}),
         ]
 
         self._window = self._dispatcher.AddWindow(
-            {'ID': 'MyWindow', 'WindowTitle': 'PSDRexa mouse sync', "Geometry": [400, 200, 400, 220]}, elements)
+            {'ID': 'MyWindow', 'WindowTitle': 'PSDRexa mouse sync', "Geometry": [400, 250, 400, 250]}, elements)
 
         self._window.On.AudioFolderPathButton.Clicked = self.CopyFolderPath
-        self._window.On.SyncButton.Clicked = self.StartSync
+        self._window.On.Sync1Button.Clicked = self.StartSync1
+        self._window.On.Sync2Button.Clicked = self.StartSync2
         self._window.On.MyWindow.Close = self.OnClose
         self._window.Show()
         self._dispatcher.RunLoop()
@@ -51,14 +54,14 @@ class PSDRexaSyncerUI:
         self._window.Find('AudioFolderPath').Insert(folder_path)
         pass
 
-    def StartSync(self,ev):
+    def StartSync2(self,ev):
 
         audio_folder_path = self._window.Find('AudioFolderPath').Text
         video_index = self._window.Find('VideoTrackInput').Value
         audio_index = self._window.Find('AudioTrackInput').Value
 
         if audio_folder_path == "":
-            self._window.Find('ResultLabel').Text = f"Please set audio_file_path"
+            self._window.Find('Result2Label').Text = f"Please set audio_file_path"
             return
 
         project_manager = self._resolve.GetProjectManager()
@@ -74,9 +77,21 @@ class PSDRexaSyncerUI:
         BaseSyncer.init_video_items(video_tracks)
         syncer.sync_tasks(tasks)
 
-        self._window.Find('ResultLabel').Text = f"Done"
+        self._window.Find('Result2Label').Text = f"Sync Done"
 
 
+    def StartSync1(self,ev):
 
+        video_index = self._window.Find('VideoTrackInput').Value
+        project_manager = self._resolve.GetProjectManager()
+        project = project_manager.GetCurrentProject()
+        timeline = project.GetCurrentTimeline()
+        video_tracks = timeline.GetItemListInTrack("video", video_index)
 
+        tasks = BaseSyncer.create_tasks(video_tracks, [])
+        syncer = Syncer1(audio_folder_path="", frame_rate=0)
 
+        BaseSyncer.init_video_items(video_tracks)
+        syncer.sync_tasks(tasks)
+
+        self._window.Find('Result1Label').Text = f"Sync Done"

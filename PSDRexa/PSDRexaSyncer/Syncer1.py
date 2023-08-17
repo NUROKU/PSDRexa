@@ -17,3 +17,6 @@ class Syncer1(BaseSyncer):
         for _ in range(0, video_len):
             fusion_obj.NumberIn1[index] = random.uniform(0.0, 100.0)
             index += 1
+        fusion_obj.NumberIn1[video_len + 1] = 0
+
+

@@ -1,8 +1,7 @@
 from pathlib import Path
 
-from psd_tools import PSDImage
-
 from Exception.DataStoreError import DataStoreError
+from psd_tools import PSDImage
 
 
 class PsdDataStore:

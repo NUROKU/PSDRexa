@@ -20,5 +20,4 @@ class PartsRepository:
         for child in childs:
             self._parts_datastore.save_parts(folder_path=folder_path,
                                              file_name=f"{child.id_name}.png",
-                                             image=child.image_with_background(psd.top.size[0],psd.top.size[1]))
-
+                                             image=child.image_with_background(psd.top.size[0], psd.top.size[1]))

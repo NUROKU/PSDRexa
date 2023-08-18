@@ -1,17 +1,15 @@
 import os
-import time
 from pathlib import Path
 from tkinter import ttk, filedialog, messagebox
 
-from PIL import Image, ImageTk
-from Service.OutputSettingFileService import OutputSettingFileService
-from ttkwidgets import CheckboxTreeview
-from ttkwidgets.checkboxtreeview import IM_CHECKED, IM_UNCHECKED, IM_TRISTATE
-
+from PIL import Image
 from Persenter.CheckVisibleOperationPresenter import CheckVisibleOperationPresenter
 from Persenter.LayerListPersenter import LayerListPresenter
+from Service.OutputSettingFile.OutputSettingFileService import OutputSettingFileService
 from UI.CompositedImageCanvas import CompositedImageCanvas
 from module.PIL import ImageTk
+from ttkwidgets import CheckboxTreeview
+from ttkwidgets.checkboxtreeview import IM_CHECKED, IM_UNCHECKED, IM_TRISTATE
 
 
 class LayerTreeview(CheckboxTreeview):
@@ -51,7 +49,7 @@ class LayerTreeview(CheckboxTreeview):
         self._layer_list_presenter = LayerListPresenter()
 
         try:
-            file_path = Path(filedialog.askopenfilename(title="PSDファイルを選択してください",filetypes=[('psdファイル', '*.psd')]))
+            file_path = Path(filedialog.askopenfilename(title="PSDファイルを選択してください", filetypes=[('psdファイル', '*.psd')]))
             OutputSettingFileService.init_output_setting(os.path.splitext(os.path.basename(file_path))[0])
             tree_list = self._layer_list_presenter.get_layer_list(file_path)
 
@@ -138,7 +136,7 @@ class LayerTreeview(CheckboxTreeview):
         :type state: str
         """
         tags = self.item(item, "tags")
-        states = ["checkbox_on", "checkbox_off", "radiobutton_on", "radiobutton_off", "visible_on","visible_off"]
+        states = ["checkbox_on", "checkbox_off", "radiobutton_on", "radiobutton_off", "visible_on", "visible_off"]
         new_tags = [t for t in tags if t not in states]
         new_tags.append(state)
         self.item(item, tags=tuple(new_tags))
@@ -162,10 +160,12 @@ class LayerTreeview(CheckboxTreeview):
                   state if no tag among
                   ('checked', 'unchecked', 'tristate') is given.
         """
-        tag="tmp"
+        tag = "tmp"
         if "tags" not in kw:
             kw["tags"] = (tag,)
-        elif not (["checkbox_on", "checkbox_off", "radiobutton_on", "radiobutton_off", "visible_on","visible_off"] in kw["tags"]):
+        elif not (
+                ["checkbox_on", "checkbox_off", "radiobutton_on", "radiobutton_off", "visible_on", "visible_off"] in kw[
+            "tags"]):
             kw["tags"] += (tag,)
 
         return ttk.Treeview.insert(self, parent, index, iid, **kw)
@@ -186,6 +186,7 @@ class LayerTreeview(CheckboxTreeview):
 
     def get_all_item(self, only_group=False):
         items = []
+
         def get_childrens(item):
             ch = self.get_children(item)
             if not (ch is () and only_group):
@@ -201,6 +202,7 @@ class LayerTreeview(CheckboxTreeview):
 
     def get_all_item_viewer_name(self, only_group=False):
         items = []
+
         def get_childrens(item):
             ch = self.get_children(item)
             if not (ch is () and only_group):
@@ -212,4 +214,3 @@ class LayerTreeview(CheckboxTreeview):
         for c in ch:
             get_childrens(c)
         return items
-

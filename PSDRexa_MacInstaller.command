@@ -3,8 +3,10 @@
 psdrexafolder="$(dirname $0)/PSDRexa"
 pyfile="$(dirname $0)/PSDRexa.py"
 syncerfile="$(dirname $0)/PSDRexa_syncer.py"
+dummyfile="$(dirname $0)/dummy,png"
 base1="/Library/Application Support/Blackmagic Design/DaVinci Resolve"
 base2="$HOME/Library/Application Support/Blackmagic Design/DaVinci Resolve"
+base3="~/Library/Application Support/Blackmagic Design/DaVinci Resolve/Support/Fusion/Settings"
 
 if ! command -v python3 &> /dev/null
 then
@@ -61,6 +63,10 @@ if [ -f "$script_folder/PSDRexa_syncer.py" ]; then
     rm "$script_folder/PSDRexa_syncer.py"
 fi
 cp "$syncerfile" "$script_folder"
+
+cp "$dummyfile" "$base3"
+
+
 
 echo "[end]Install PSDRexa"
 

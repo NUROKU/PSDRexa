@@ -2,7 +2,7 @@ from Domain.DTO.CharacterPartsSet import CharacterPartsSet
 from Domain.DTO.CompositedImage import CompositedImage
 from Repository.CompositedImageRepository import CompositedImageRepository
 from Repository.PSDRexaFusionRepository import PSDRexaFusionRepository
-from Service.OutputSettingFileService import OutputSettingFileService, OutputSettingKeys
+from Service.OutputSettingFile.OutputSettingFileService import OutputSettingFileService, OutputSettingKeys
 from Service.PsdMemorySaverService import PsdMemorySaverService
 
 

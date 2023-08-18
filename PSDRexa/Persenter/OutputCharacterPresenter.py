@@ -1,5 +1,4 @@
-from Service.OutputSettingFileService import OutputSettingFileService, OutputSettingKeys
-from Service.SettingFileService import SettingFileService, SettingKeys
+from Service.OutputSettingFile.OutputSettingFileService import OutputSettingFileService, OutputSettingKeys
 from Usecase.OutputCharacterFusion import OutputCharacterFusion
 from Usecase.OutputCompositedImage import OutpuCompositedImage
 

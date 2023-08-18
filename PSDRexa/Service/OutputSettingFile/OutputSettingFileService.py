@@ -46,6 +46,7 @@ class OutputSettingFileService:
                 OutputSettingFileService.config_dict = json.load(f)
 
         OutputSettingFileService.json_path = file_path
+
     @staticmethod
     def get_json_path() -> str:
 
@@ -89,5 +90,4 @@ class OutputSettingFileService:
     @staticmethod
     def get_dummy_path() -> str:
         folder = dirname(abspath(__file__))
-        return str(Path(folder, "dummy.png"))
-
+        return str(Path(folder, "../dummy.png"))

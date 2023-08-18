@@ -1,7 +1,5 @@
-import os
 from pathlib import Path
 
-from Service.PsdMemorySaverService import PsdMemorySaverService
 from module.PIL.Image import Image
 
 

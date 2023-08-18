@@ -17,6 +17,7 @@ class SettingKeys(Enum):
     index_for_output = "index_for_output"
     use_psdtool_func = "use_psdtool_func"
 
+
 class SettingFileService:
     json_path = ""
     config_dict = None
@@ -68,4 +69,3 @@ class SettingFileService:
     def get_dummy_path() -> str:
         folder = dirname(abspath(__file__))
         return str(Path(folder, "dummy.png"))
-

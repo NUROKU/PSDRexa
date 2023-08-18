@@ -1,8 +1,7 @@
 import tkinter
 
-from PIL import Image
-
 from Common import Logger
+from PIL import Image
 from Persenter.CombineLayerPresenter import CombineLayerPresenter
 from module.PIL import ImageTk
 

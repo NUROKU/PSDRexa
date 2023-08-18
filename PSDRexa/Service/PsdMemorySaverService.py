@@ -1,5 +1,4 @@
 from Domain.Psd.Psd import Psd
-from Exception.ServiceError import ServiceError
 
 
 class PsdMemorySaverService:

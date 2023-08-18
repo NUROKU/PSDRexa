@@ -25,4 +25,3 @@ class PSDRexaTemplateService:
             file_path = str(Path(dirname(abspath(__file__)), "PSDRexa.drb"))
             media_pool.ImportFolderFromFile(
                 file_path)
-

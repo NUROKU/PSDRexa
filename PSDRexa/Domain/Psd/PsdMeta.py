@@ -1,7 +1,6 @@
 """
 Psdのメタデータ、レイヤーとグループ以外の情報は一旦全部ここに
 """
-import os
 from pathlib import Path
 
 

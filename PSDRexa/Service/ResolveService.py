@@ -1,6 +1,3 @@
-from Exception.ServiceError import ServiceError
-
-
 class ResolveService:
     resolve = None
 
@@ -29,10 +26,9 @@ class ResolveService:
         # framerate = ResolveService.get_framerate()
         # timeline = ResolveService.get_resolve().GetProjectManager().GetCurrentProject().GetCurrentTimeline()
         # start_timecode = timeline.GetStartTimecode()
-#
+        #
         # time_parts = start_timecode.split(':')
         # hours, minutes, seconds, frames = [int(part) for part in time_parts]
         # total_frames = hours * 3600 * framerate + minutes * 60 * framerate + seconds * framerate
         timeline = ResolveService.get_resolve().GetProjectManager().GetCurrentProject().GetCurrentTimeline()
         return timeline.GetStartFrame()
-

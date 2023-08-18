@@ -15,7 +15,6 @@ class BaseLayerProperties:
         self.__post_init__()
 
     def __post_init__(self):
-
         v_name = self.name.lstrip('!*')
         self.viewer_name = v_name
 
@@ -29,4 +28,3 @@ class BaseLayerProperties:
     @classmethod
     def set_id_counter(cls, counter_id: int):
         BaseLayerProperties.__id_counter = counter_id
-

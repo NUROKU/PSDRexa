@@ -14,7 +14,8 @@ class PSDRexaFusionRepository:
         self._character_datastore = CharacterFusionDataStore()
         self._resolve_bin_datastore = ResolveBinDatastore()
 
-    def output_fusion(self, composited_image:CompositedImage,eye_parts:CharacterPartsSet,mouse_parts:CharacterPartsSet,psdmeta: PsdMeta):
+    def output_fusion(self, composited_image: CompositedImage, eye_parts: CharacterPartsSet,
+                      mouse_parts: CharacterPartsSet, psdmeta: PsdMeta):
 
         sotai = ""
         mepachi_open = ""
@@ -33,10 +34,12 @@ class PSDRexaFusionRepository:
             ignore_parent_id = ignore["parent"]
             if ignore_parent_id == OutputSettingFileService.read_config(OutputSettingKeys.pachi_group_1):
                 mepachi_open = save_path_folder / eye_parts.get_parent_folder_path(psdmeta) / f"{ignore_id}.png"
-                mepachi_close = save_path_folder / eye_parts.get_parent_folder_path(psdmeta) / f"{OutputSettingFileService.read_config(OutputSettingKeys.pachi_image_close_1)}.png"
+                mepachi_close = save_path_folder / eye_parts.get_parent_folder_path(
+                    psdmeta) / f"{OutputSettingFileService.read_config(OutputSettingKeys.pachi_image_close_1)}.png"
             if ignore_parent_id == OutputSettingFileService.read_config(OutputSettingKeys.pachi_group_2):
                 kuchipaku_open = save_path_folder / mouse_parts.get_parent_folder_path(psdmeta) / f"{ignore_id}.png"
-                kuchipaku_close = save_path_folder / mouse_parts.get_parent_folder_path(psdmeta) / f"{OutputSettingFileService.read_config(OutputSettingKeys.pachi_image_close_2)}.png"
+                kuchipaku_close = save_path_folder / mouse_parts.get_parent_folder_path(
+                    psdmeta) / f"{OutputSettingFileService.read_config(OutputSettingKeys.pachi_image_close_2)}.png"
 
         for ignore in composited_image.not_ignored_list:
             ignore_id = ignore["id"]
@@ -56,4 +59,6 @@ class PSDRexaFusionRepository:
             kuchipaku_open = SettingFileService.get_dummy_path()
         if kuchipaku_close == "":
             kuchipaku_close = SettingFileService.get_dummy_path()
-        self._character_datastore.put_character_fusion(sotai=sotai,mepachi_open=mepachi_open,mepachi_close=mepachi_close,kuchipaku_open=kuchipaku_open,kuchipaku_close=kuchipaku_close)
+        self._character_datastore.put_character_fusion(sotai=sotai, mepachi_open=mepachi_open,
+                                                       mepachi_close=mepachi_close, kuchipaku_open=kuchipaku_open,
+                                                       kuchipaku_close=kuchipaku_close)

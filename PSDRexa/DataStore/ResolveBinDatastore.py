@@ -81,10 +81,10 @@ class ResolveBinDatastore:
 
         print(max_right_offset)
         res = media_pool.AppendToTimeline([{
-                       'mediaPoolItem': item[0],
-                       'startFrame' :0,
-                       'mediaType' :1,
-                       'trackIndex' :index,
-                       'recordFrame' : max_right_offset
-               }])
+            'mediaPoolItem': item[0],
+            'startFrame': 0,
+            'mediaType': 1,
+            'trackIndex': index,
+            'recordFrame': max_right_offset
+        }])
         # return res

@@ -1,15 +1,10 @@
-import wave
-import struct
-import os
-import tkinter as tk
-
 from PSDRexaSyncer.BaseSyncer import BaseSyncer
 from PSDRexaSyncer.Syncer1 import Syncer1
 from PSDRexaSyncer.Syncer2 import Syncer2
 
 
 class PSDRexaSyncerUI:
-    def __init__(self,fu,bmd,resolve):
+    def __init__(self, fu, bmd, resolve):
         self._resolve = resolve
         self._fu = fu
         self._bmd = bmd
@@ -28,8 +23,8 @@ class PSDRexaSyncerUI:
             self._ui.LineEdit({'ID': 'AudioFolderPath', 'Text': "", "Geometry": [10, 130, 350, 30]}),
             self._ui.Button({"ID": "Sync2Button", "Text": "口パクSync", "Geometry": [10, 170, 100, 30]}),
             self._ui.Label({"ID": "Result2Label", "Text": "-", "Geometry": [120, 170, 150, 30]}),
-            self._ui.Button({"ID": "Sync1Button", "Text": "目パチSync", "Geometry": [10, 210, 100, 30]}),
-            self._ui.Label({"ID": "Result1Label", "Text": "-", "Geometry": [120, 210, 150, 30]}),
+            self._ui.Button({"ID": "Sync1Button", "Text": "目パチのキーフレームを再構築", "Geometry": [10, 210, 150, 30]}),
+            self._ui.Label({"ID": "Result1Label", "Text": "-", "Geometry": [170, 210, 150, 30]}),
         ]
 
         self._window = self._dispatcher.AddWindow(
@@ -43,19 +38,18 @@ class PSDRexaSyncerUI:
         self._dispatcher.RunLoop()
         self._window.Hide()
 
-    def OnClose(self,ev):
+    def OnClose(self, ev):
         self._dispatcher.ExitLoop()
 
-    def CopyFolderPath(self,ev):
+    def CopyFolderPath(self, ev):
         folder_path = self._fu.RequestDir("", "",
-                                    {"FReqB_SeqGather": True,
-                                     "FReqS_Title": "Choose Folder"})
+                                          {"FReqB_SeqGather": True,
+                                           "FReqS_Title": "Choose Folder"})
         self._window.Find('AudioFolderPath').Clear()
         self._window.Find('AudioFolderPath').Insert(folder_path)
         pass
 
-    def StartSync2(self,ev):
-
+    def StartSync2(self, ev):
         audio_folder_path = self._window.Find('AudioFolderPath').Text
         video_index = self._window.Find('VideoTrackInput').Value
         audio_index = self._window.Find('AudioTrackInput').Value
@@ -79,9 +73,7 @@ class PSDRexaSyncerUI:
 
         self._window.Find('Result2Label').Text = f"Sync Done"
 
-
-    def StartSync1(self,ev):
-
+    def StartSync1(self, ev):
         video_index = self._window.Find('VideoTrackInput').Value
         project_manager = self._resolve.GetProjectManager()
         project = project_manager.GetCurrentProject()

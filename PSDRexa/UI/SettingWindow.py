@@ -53,7 +53,6 @@ class SettingWindow:
         sep1 = ttk.Separator(dlg_modal)
         sep1.pack(fill="both")
 
-
         ### image_size
         checkbox_var = tk.BooleanVar(value=SettingFileService.read_config(SettingKeys.is_image_size_original))
         checkbox = tk.Checkbutton(dlg_modal, text="基ファイルのサイズで画像出力", variable=checkbox_var)

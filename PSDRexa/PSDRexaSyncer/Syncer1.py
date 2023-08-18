@@ -1,11 +1,7 @@
-import os
-import struct
-import wave
-from typing import List
+import random
 
 from PSDRexaSyncer.BaseSyncer import BaseSyncer
 from PSDRexaSyncer.SyncTask import SyncTask
-import random
 
 
 class Syncer1(BaseSyncer):
@@ -18,5 +14,3 @@ class Syncer1(BaseSyncer):
             fusion_obj.NumberIn1[index] = random.uniform(0.0, 100.0)
             index += 1
         fusion_obj.NumberIn1[video_len + 1] = 0
-
-

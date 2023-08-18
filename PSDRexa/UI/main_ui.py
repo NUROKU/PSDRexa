@@ -1,8 +1,8 @@
-import tkinter
-import platform
 import os
+import platform
+import tkinter
 import tkinter as tk
-from tkinter import messagebox, filedialog
+from tkinter import messagebox
 
 from Persenter.OutputCharacterPresenter import OutputCharacterPresenter
 from Persenter.SaveCompositedImagePersenter import SaveCompositedImagePersenter
@@ -10,9 +10,9 @@ from Service.PSDRexaTemplateService import PSDRexaTemplateService
 from Service.ResolveService import ResolveService
 from Service.SettingFileService import SettingKeys, SettingFileService
 from UI.CompositedImageCanvas import CompositedImageCanvas
+from UI.OutputSettingUI import OutputSettingUI
 from UI.SettingWindow import SettingWindow
 from UI.layerTreeView import LayerTreeview
-from UI.OutputSettingUI import OutputSettingUI
 
 
 class MainUI:
@@ -42,7 +42,7 @@ class MainUI:
 
         # initだしここでもいいのかな、いや別にすべきでは・・・？
         PSDRexaTemplateService.init_template()
-        #messagebox.showerror("error", "DaVinci Resolveの読み込みに失敗しました")
+        # messagebox.showerror("error", "DaVinci Resolveの読み込みに失敗しました")
 
         root = tk.Tk()
         root.title("PSDRexa")

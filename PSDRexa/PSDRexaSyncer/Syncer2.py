@@ -1,7 +1,6 @@
 import os
 import struct
 import wave
-from typing import List
 
 from PSDRexaSyncer.BaseSyncer import BaseSyncer
 from PSDRexaSyncer.SyncTask import SyncTask

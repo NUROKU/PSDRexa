@@ -2,7 +2,7 @@ from PSDRexaSyncer.SyncTask import SyncerAudioClip, SyncTask
 
 
 class BaseSyncer:
-    def __init__(self, audio_folder_path:str, frame_rate: int):
+    def __init__(self, audio_folder_path: str, frame_rate: int):
         self._audio_folder_path = audio_folder_path
         self._frame_rate = frame_rate
 
@@ -53,5 +53,3 @@ class BaseSyncer:
 
             tasks.append(SyncTask(video, clip_list))
         return tasks
-
-

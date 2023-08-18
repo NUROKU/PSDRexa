@@ -5,6 +5,7 @@ from Domain.Psd.PsdTop import PsdTop
 class CharacterPartsSet:
     def __init__(self, group_name):
         self._group_name = group_name
+
     @property
     def group_name(self):
         return self._group_name
@@ -20,5 +21,3 @@ class CharacterPartsSet:
 
     def get_parent_folder_path(self, psd_meta: PsdMeta):
         return f"{psd_meta.file_name}_{self._group_name}"
-
-    

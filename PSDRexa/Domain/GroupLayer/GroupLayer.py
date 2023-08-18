@@ -1,5 +1,4 @@
 from Domain.BaseLayerProperties import BaseLayerProperties
-from Domain.ImageLayer.ImageLayer import ImageLayer
 from Domain.Layer import Layer
 
 

@@ -1,10 +1,10 @@
 from typing import List
 
+from Common import Logger
 from Domain.BaseLayerProperties import BaseLayerProperties
 from Domain.DTO.CheckVisibleOperation import CheckVisibleOperation
 from Domain.ImageLayer.ImageLayer import ImageLayer
 from Exception.DomainError import DomainError
-from Common import Logger
 
 logger = Logger.get_logger(__name__)
 
@@ -46,7 +46,7 @@ class PsdTop:
             is_child = layer.layer_type_name.endswith("ImageLayer")
 
             ret_list.append(
-                [layer.id_name, layer.viewer_name, layer_parent_id,  is_child])
+                [layer.id_name, layer.viewer_name, layer_parent_id, is_child])
 
         return ret_list
 

@@ -1,5 +1,6 @@
 import logging
 
+
 # TODO setLevel外部から変えれるようにしとこっかな・・・
 def get_logger(modname):
     logger = logging.getLogger(modname)

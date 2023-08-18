@@ -1,10 +1,7 @@
 from pathlib import Path
 
-import Domain.BaseLayerProperties
-from PIL import Image
-from psd_tools.api import layers
-
 from Common import Logger
+from DataStore.PsdDataStore import PsdDataStore
 from Domain.BaseLayerProperties import BaseLayerProperties
 from Domain.GroupLayer.OneSelectGroupLayer import OneSelectGroupLayer
 from Domain.GroupLayer.VisibleGroupLayer import GroupLayer, VisibleGroupLayer
@@ -14,10 +11,11 @@ from Domain.ImageLayer.OneSelectImageLayer import OneSelectImageLayer
 from Domain.Psd.Psd import Psd
 from Domain.Psd.PsdMeta import PsdMeta
 from Domain.Psd.PsdTop import PsdTop
-from DataStore.PsdDataStore import PsdDataStore
 from Exception.DataStoreError import DataStoreError
 from Exception.RepositoryError import RepositoryError
+from PIL import Image
 from Service.SettingFileService import SettingFileService, SettingKeys
+from psd_tools.api import layers
 
 logger = Logger.get_logger(__name__)
 
@@ -125,11 +123,12 @@ def define_image_layer_domain(layer_obj, domain_layer_list, ratio):
     if layer_obj.opacity != 255 and layer_obj.opacity != 0:
         # 透明度調整
         back_img = Image.new("RGBA", layer_obj.size, (255, 255, 255, 0))
-        img = Image.blend(back_img,layer_obj.topil(), layer_obj.opacity / 255)
+        img = Image.blend(back_img, layer_obj.topil(), layer_obj.opacity / 255)
 
     base_property = BaseLayerProperties(name=layer_obj.name, size=layer_obj.size, offset=layer_obj.offset,
                                         visible=layer_obj.is_visible(),
-                                        layer_image=LayerImage(img, preview_ratio=ratio, opacity=layer_obj.opacity, blend_mode=str(layer_obj.blend_mode)))
+                                        layer_image=LayerImage(img, preview_ratio=ratio, opacity=layer_obj.opacity,
+                                                               blend_mode=str(layer_obj.blend_mode)))
 
     if SettingFileService.read_config(SettingKeys.use_psdtool_func) is True:
         if layer_obj.name.startswith("*"):

@@ -2,10 +2,11 @@ import tkinter
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
 
-from Service.OutputSettingFile.OutputSettingFileService import OutputSettingFileService, OutputSettingKeys
-from Service.SettingFileService import SettingKeys, SettingFileService
-from Service.PsdMemorySaverService import PsdMemorySaverService
 from Persenter.InitPartsPersenter import InitPartsPresenter
+from Service.OutputSettingFile.OutputSettingFileService import OutputSettingFileService, OutputSettingKeys
+from Service.PsdMemorySaverService import PsdMemorySaverService
+from Service.SettingFileService import SettingKeys, SettingFileService
+
 
 class OutputSettingUI:
     def __init__(self):
@@ -25,7 +26,8 @@ class OutputSettingUI:
 
         ttk.Separator(self.root, orient='horizontal').pack(side=tk.TOP, fill=tk.X, pady=5)
 
-        self.check_value = tk.BooleanVar(value=OutputSettingFileService.read_config(OutputSettingKeys.use_fusion_template))
+        self.check_value = tk.BooleanVar(
+            value=OutputSettingFileService.read_config(OutputSettingKeys.use_fusion_template))
         self.check_box = tk.Checkbutton(self.root, text="目パチや口パクが行えるFusionTemmplateとして出力する",
                                         variable=self.check_value, anchor='w', command=self.checkbox_update)
         self.check_box.pack(side=tk.TOP, anchor='w')
@@ -35,13 +37,13 @@ class OutputSettingUI:
         frame_main = tk.Frame(self.root)
         frame_main.pack(side=tk.TOP, fill=tk.BOTH, pady=5)
 
-        frame_left = tk.Frame(frame_main,width=200)
+        frame_left = tk.Frame(frame_main, width=200)
         frame_left.pack(side=tk.LEFT, fill=tk.Y, padx=5)
 
         frame_right = tk.Frame(frame_main)
         frame_right.pack(side=tk.LEFT, fill=tk.Y, padx=5)
 
-        self.list_box = tk.Listbox(frame_left,width=40)
+        self.list_box = tk.Listbox(frame_left, width=40)
         self.list_box.pack(pady=5)
         self.list_box.bind('<<ListboxSelect>>', self.on_select)
 
@@ -56,7 +58,8 @@ class OutputSettingUI:
 
         self.entry_mepachi_group = tk.Entry(frame_entry_mepachi_group)
         self.entry_mepachi_group.pack(side=tk.LEFT)
-        self.entry_mepachi_group.bind("<Button-1>", lambda event, parent_group="": self.on_entry_click(event, parent_group))
+        self.entry_mepachi_group.bind("<Button-1>",
+                                      lambda event, parent_group="": self.on_entry_click(event, parent_group))
         self.entry_mepachi_group.insert(0, OutputSettingFileService.read_config(OutputSettingKeys.pachi_group_1))
 
         frame_entry_mepachi = tk.Frame(frame_right)
@@ -68,7 +71,8 @@ class OutputSettingUI:
         self.entry_mepachi = tk.Entry(frame_entry_mepachi)
         self.entry_mepachi.pack(side=tk.LEFT)
         self.entry_mepachi.bind("<Button-1>",
-                                        lambda event, parent_group=self.entry_mepachi_group: self.on_entry_click(event, parent_group))
+                                lambda event, parent_group=self.entry_mepachi_group: self.on_entry_click(event,
+                                                                                                         parent_group))
         self.entry_mepachi.insert(0, OutputSettingFileService.read_config(OutputSettingKeys.pachi_image_close_1))
 
         label_kuchipaku = tk.Label(frame_right, text="口パク")
@@ -82,7 +86,8 @@ class OutputSettingUI:
 
         self.entry_kuchipaku_group = tk.Entry(frame_entry_kuchipaku_group)
         self.entry_kuchipaku_group.pack(side=tk.LEFT)
-        self.entry_kuchipaku_group.bind("<Button-1>", lambda event, parent_group="": self.on_entry_click(event, parent_group))
+        self.entry_kuchipaku_group.bind("<Button-1>",
+                                        lambda event, parent_group="": self.on_entry_click(event, parent_group))
         self.entry_kuchipaku_group.insert(0, OutputSettingFileService.read_config(OutputSettingKeys.pachi_group_2))
 
         frame_entry_kuchipaku = tk.Frame(frame_right)
@@ -94,7 +99,8 @@ class OutputSettingUI:
         self.entry_kuchipaku = tk.Entry(frame_entry_kuchipaku)
         self.entry_kuchipaku.pack(side=tk.LEFT)
         self.entry_kuchipaku.bind("<Button-1>",
-                                        lambda event, parent_group=self.entry_kuchipaku_group: self.on_entry_click(event, parent_group))
+                                  lambda event, parent_group=self.entry_kuchipaku_group: self.on_entry_click(event,
+                                                                                                             parent_group))
         self.entry_kuchipaku.insert(0, OutputSettingFileService.read_config(OutputSettingKeys.pachi_image_close_2))
         frame_buttons = tk.Frame(frame_right)
         frame_buttons.pack(pady=5)
@@ -164,10 +170,14 @@ class OutputSettingUI:
                 parts_list.append(self.entry_kuchipaku_group.get())
             init_parts.init_parts(parts_list)
 
-            OutputSettingFileService.update_and_save_config(OutputSettingKeys.pachi_group_1, self.entry_mepachi_group.get())
-            OutputSettingFileService.update_and_save_config(OutputSettingKeys.pachi_group_2, self.entry_kuchipaku_group.get())
-            OutputSettingFileService.update_and_save_config(OutputSettingKeys.pachi_image_close_1, self.entry_mepachi.get())
-            OutputSettingFileService.update_and_save_config(OutputSettingKeys.pachi_image_close_2, self.entry_kuchipaku.get())
+            OutputSettingFileService.update_and_save_config(OutputSettingKeys.pachi_group_1,
+                                                            self.entry_mepachi_group.get())
+            OutputSettingFileService.update_and_save_config(OutputSettingKeys.pachi_group_2,
+                                                            self.entry_kuchipaku_group.get())
+            OutputSettingFileService.update_and_save_config(OutputSettingKeys.pachi_image_close_1,
+                                                            self.entry_mepachi.get())
+            OutputSettingFileService.update_and_save_config(OutputSettingKeys.pachi_image_close_2,
+                                                            self.entry_kuchipaku.get())
 
             messagebox.showinfo("Title", "目パチや口パク用の初期構築が完了しました")
             self.root.lift()

@@ -14,7 +14,4 @@ class InitPartsPresenter:
         for n in parts_list:
             ret_list.append(CharacterPartsSet(n))
 
-
-
         self.init_parts_usecase.execute(ret_list)
-

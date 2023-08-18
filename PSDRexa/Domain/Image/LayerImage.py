@@ -1,6 +1,5 @@
-from PIL import Image
-
 from Common import Logger
+from PIL import Image
 
 logger = Logger.get_logger(__name__)
 
@@ -43,10 +42,9 @@ class LayerImage:
 
         return resized_image
 
-    def image_with_background(self, size_width: int, size_height: int , offset_x:int, offset_y:int):
-        background_image = Image.new("RGBA", (size_width,size_height), (255, 255, 255, 0))
+    def image_with_background(self, size_width: int, size_height: int, offset_x: int, offset_y: int):
+        background_image = Image.new("RGBA", (size_width, size_height), (255, 255, 255, 0))
 
-        c = Image.new('RGBA', (size_width,size_height), (255, 255, 255, 0))
-        c.paste(self._image, (offset_x,offset_y))
+        c = Image.new('RGBA', (size_width, size_height), (255, 255, 255, 0))
+        c.paste(self._image, (offset_x, offset_y))
         return Image.alpha_composite(background_image, c)
-

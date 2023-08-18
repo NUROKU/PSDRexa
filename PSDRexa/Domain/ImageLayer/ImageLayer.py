@@ -27,5 +27,3 @@ class ImageLayer(Layer):
     def image_with_background(self, size_x, size_y):
         offset = self.offset
         return self.layer_image.image_with_background(size_x, size_y, offset[0], offset[1])
-
-

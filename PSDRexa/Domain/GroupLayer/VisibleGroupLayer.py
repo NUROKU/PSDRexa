@@ -19,7 +19,6 @@ class VisibleGroupLayer(GroupLayer):
             if child_affect:
                 self.fix_child_layer_check_selected_off()
 
-
     @property
     def layer_type_name(self):
         return "VisibleGroupLayer"

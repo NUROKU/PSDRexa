@@ -1,6 +1,6 @@
 from Domain.DTO.CompositedImage import CompositedImage
-from Repository.CompositedImageResolveRepository import CompositedImageResolveRepository
 from Repository.CompositedImageRepository import CompositedImageRepository
+from Repository.CompositedImageResolveRepository import CompositedImageResolveRepository
 from Service.PsdMemorySaverService import PsdMemorySaverService
 
 

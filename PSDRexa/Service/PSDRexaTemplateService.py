@@ -21,7 +21,8 @@ class PSDRexaTemplateService:
                 break
 
         if existing_bin is None:
-            media_pool = project.GetMediaPool()
+            root_folder = media_pool.GetRootFolder()
+            media_pool.SetCurrentFolder(root_folder)
             file_path = str(Path(dirname(abspath(__file__)), "PSDRexa.drb"))
             media_pool.ImportFolderFromFile(
                 file_path)

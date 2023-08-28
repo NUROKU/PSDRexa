@@ -58,6 +58,16 @@ class GroupLayer(Layer):
                 layer.selected_on()
 
         for layer in self.child_layers:
+            if layer.layer_type_name == "OneSelectGroupLayer":
+                lis = [n for n in self.child_group_layers if n.layer_type_name == "OneSelectGroupLayer"]
+                lis[len(lis) - 1].selected_on()
+                return
+            if layer.layer_type_name == "OneSelectImageLayer":
+                lis = [n for n in self.child_image_layers if n.layer_type_name == "OneSelectImageLayer"]
+                lis[len(lis) - 1].selected_on()
+                return
+
+        for layer in self.child_layers:
             if layer.is_visible is True:
                 return
 

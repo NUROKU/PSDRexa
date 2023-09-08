@@ -18,7 +18,7 @@ class OutputSettingUI:
         frame_top = tk.Frame(self.root)
         frame_top.pack(side=tk.TOP, fill=tk.X, pady=5)
 
-        button_output = tk.Button(frame_top, text="出力先", command=self.on_output_button_click)
+        button_output = tk.Button(frame_top, text="output folder", command=self.on_output_button_click)
         button_output.pack(side=tk.LEFT)
 
         self.label_output = tk.Label(frame_top, text=SettingFileService.read_config(SettingKeys.image_output_folder))
@@ -28,7 +28,7 @@ class OutputSettingUI:
 
         self.check_value = tk.BooleanVar(
             value=OutputSettingFileService.read_config(OutputSettingKeys.use_fusion_template))
-        self.check_box = tk.Checkbutton(self.root, text="目パチや口パクが行えるFusionTemmplateとして出力する",
+        self.check_box = tk.Checkbutton(self.root, text="use Fusion Template",
                                         variable=self.check_value, anchor='w', command=self.checkbox_update)
         self.check_box.pack(side=tk.TOP, anchor='w')
 
@@ -47,13 +47,13 @@ class OutputSettingUI:
         self.list_box.pack(pady=5)
         self.list_box.bind('<<ListboxSelect>>', self.on_select)
 
-        label_mepachi = tk.Label(frame_right, text="目パチ")
+        label_mepachi = tk.Label(frame_right, text="Blink")
         label_mepachi.pack()
 
         frame_entry_mepachi_group = tk.Frame(frame_right)
         frame_entry_mepachi_group.pack(fill=tk.X)
 
-        label_closed_eye_group = tk.Label(frame_entry_mepachi_group, text="グループ：")
+        label_closed_eye_group = tk.Label(frame_entry_mepachi_group, text="Group：")
         label_closed_eye_group.pack(side=tk.LEFT)
 
         self.entry_mepachi_group = tk.Entry(frame_entry_mepachi_group)
@@ -65,7 +65,7 @@ class OutputSettingUI:
         frame_entry_mepachi = tk.Frame(frame_right)
         frame_entry_mepachi.pack(fill=tk.X)
 
-        label_closed_eye = tk.Label(frame_entry_mepachi, text="閉じた目：")
+        label_closed_eye = tk.Label(frame_entry_mepachi, text="Closed Eye：")
         label_closed_eye.pack(side=tk.LEFT)
 
         self.entry_mepachi = tk.Entry(frame_entry_mepachi)
@@ -75,13 +75,13 @@ class OutputSettingUI:
                                                                                                          parent_group))
         self.entry_mepachi.insert(0, OutputSettingFileService.read_config(OutputSettingKeys.pachi_image_close_1))
 
-        label_kuchipaku = tk.Label(frame_right, text="口パク")
+        label_kuchipaku = tk.Label(frame_right, text="Lip-Sync")
         label_kuchipaku.pack()
 
         frame_entry_kuchipaku_group = tk.Frame(frame_right)
         frame_entry_kuchipaku_group.pack(fill=tk.X)
 
-        label_closed_mouth_group = tk.Label(frame_entry_kuchipaku_group, text="グループ：")
+        label_closed_mouth_group = tk.Label(frame_entry_kuchipaku_group, text="Group：")
         label_closed_mouth_group.pack(side=tk.LEFT)
 
         self.entry_kuchipaku_group = tk.Entry(frame_entry_kuchipaku_group)
@@ -93,7 +93,7 @@ class OutputSettingUI:
         frame_entry_kuchipaku = tk.Frame(frame_right)
         frame_entry_kuchipaku.pack(fill=tk.X)
 
-        label_closed_mouth = tk.Label(frame_entry_kuchipaku, text="閉じた口：")
+        label_closed_mouth = tk.Label(frame_entry_kuchipaku, text="Closed Mouse：")
         label_closed_mouth.pack(side=tk.LEFT)
 
         self.entry_kuchipaku = tk.Entry(frame_entry_kuchipaku)
@@ -108,7 +108,7 @@ class OutputSettingUI:
         # button_init = tk.Button(frame_buttons, text="初期構築を行う", command=self.on_init_button_click)
         # button_init.pack(side=tk.LEFT, padx=5)
 
-        button_save = tk.Button(frame_buttons, text="目パチ口パク用のパーツを出力する", command=self.on_save_button_click)
+        button_save = tk.Button(frame_buttons, text="Set Blink and Lip-Sync", command=self.on_save_button_click)
         button_save.pack(side=tk.LEFT, padx=5)
 
     def on_select(self, event):
@@ -179,7 +179,7 @@ class OutputSettingUI:
             OutputSettingFileService.update_and_save_config(OutputSettingKeys.pachi_image_close_2,
                                                             self.entry_kuchipaku.get())
 
-            messagebox.showinfo("Title", "目パチや口パク用の初期構築が完了しました")
+            messagebox.showinfo("Title", "Finished to set blink and lip-sync")
             self.root.lift()
         except Exception as e:
             messagebox.showerror("error", e.__str__())

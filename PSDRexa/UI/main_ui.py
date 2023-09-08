@@ -41,7 +41,7 @@ class MainUI:
             self.setting_window.execute()
 
         # initだしここでもいいのかな、いや別にすべきでは・・・？
-        PSDRexaTemplateService.init_template()
+        # PSDRexaTemplateService.init_template()
         # messagebox.showerror("error", "DaVinci Resolveの読み込みに失敗しました")
 
         root = tk.Tk()
@@ -57,9 +57,9 @@ class MainUI:
 
         # 設定とか
         settings_frame1 = tk.Frame(root)
-        btn3 = tkinter.Button(settings_frame1, text='設定', command=settings, width=5)
+        btn3 = tkinter.Button(settings_frame1, text='general setting', command=settings)
         btn3.pack(side="left", padx=5, pady=5, anchor=tk.W)
-        btn4 = tk.Button(settings_frame1, text="出力先/口パク目パチ設定", command=set_local_folder)
+        btn4 = tk.Button(settings_frame1, text="output / blink lip-sync setting", command=set_local_folder)
         btn4.pack(side="left", padx=5, pady=5, anchor=tk.W)
         directory_label_text = tk.StringVar()
         directory_label = tk.Label(settings_frame1,
@@ -76,11 +76,11 @@ class MainUI:
         tree = LayerTreeview(root, canvas=canvas, show='tree')
         tree.pack(fill="both", expand=True)
 
-        btn1 = tkinter.Button(root, text='出力', command=save, width=5)
+        btn1 = tkinter.Button(root, text='Output', command=save, width=5)
         btn1.pack(side="left", padx=5, pady=5, anchor=tk.N)
 
         # SpinBoxの設定
-        index_label = tk.Label(root, text="出力index:")
+        index_label = tk.Label(root, text="video index:")
         index_label.pack(side="top", padx=1, pady=1, anchor=tk.N)
         spinbox_var = tk.StringVar()
         spinbox_var.trace("w", set_output_index)

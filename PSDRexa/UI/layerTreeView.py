@@ -49,7 +49,7 @@ class LayerTreeview(CheckboxTreeview):
         self._layer_list_presenter = LayerListPresenter()
 
         try:
-            file_path = Path(filedialog.askopenfilename(title="PSDファイルを選択してください", filetypes=[('psdファイル', '*.psd')]))
+            file_path = Path(filedialog.askopenfilename(title="Select PSD file", filetypes=[('psdファイル', '*.psd')]))
             OutputSettingFileService.init_output_setting(os.path.splitext(os.path.basename(file_path))[0])
             tree_list = self._layer_list_presenter.get_layer_list(file_path)
 
@@ -72,7 +72,7 @@ class LayerTreeview(CheckboxTreeview):
             self._check_visible_operation_presenter = CheckVisibleOperationPresenter([])
             self._update_canvas()
         except Exception as e:
-            messagebox.showerror("error", f"{e.__str__()}アプリケーションを終了します。")
+            messagebox.showerror("error", f"{e.__str__()} Close PSDRexa")
             exit()
         # self._update_canvas()
 

@@ -79,7 +79,6 @@ class ResolveBinDatastore:
         if max_right_offset == -1:
             max_right_offset = ResolveService.get_startframe()
 
-        print(max_right_offset)
         res = media_pool.AppendToTimeline([{
             'mediaPoolItem': item[0],
             'startFrame': 0,

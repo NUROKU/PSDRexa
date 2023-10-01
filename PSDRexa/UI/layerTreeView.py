@@ -189,7 +189,7 @@ class LayerTreeview(CheckboxTreeview):
 
         def get_childrens(item):
             ch = self.get_children(item)
-            if not (ch is () and only_group):
+            if not (ch == () and only_group):
                 items.append(item)
             for c in ch:
                 get_childrens(c)
@@ -205,7 +205,7 @@ class LayerTreeview(CheckboxTreeview):
 
         def get_childrens(item):
             ch = self.get_children(item)
-            if not (ch is () and only_group):
+            if not (ch == () and only_group):
                 items.append(self.item(item)["text"])
             for c in ch:
                 get_childrens(c)

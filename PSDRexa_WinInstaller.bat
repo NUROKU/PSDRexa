@@ -38,26 +38,23 @@ if exist "%base1%" (
     exit /b
 )
 
-if exist "%module_folder%\\PSDCharacterExporter\\" (
-    echo delete old PSDCharacterExporterDirectory.
-    rd /s /Q "%module_folder%\\PSDCharacterExporter
-)
 if exist "%module_folder%\\PSDRexa\\" (
     echo delete old PSDRexaDirectory
     rd /s /Q "%module_folder%\\PSDRexa"
 )
 
-
 xcopy /E /I /Y "%psdrexafolder%" "%module_folder%\\PSDRexa"
-cd "%module_folder%\\PSDRexa"
-python -m pip install -r requirements.txt -t module
 
-
-if exist "%script_folder%\\PSDCharacterExporter.py" (
-    echo delete old PSDCharacterExporter
-    cd %script_folder%
-    del /Q PSDCharacterExporter.py
+if exist "%module_folder%\\PSDRexa\\" (
+    cd "%module_folder%\\PSDRexa"
+    python -m pip install -r requirements.txt -t module
+) else (
+    echo MsgBox "Copy failed", vbExclamation > %temp%\tmp.vbs
+    cscript /nologo %temp%\tmp.vbs
+    del %temp%\tmp.vbs
+    exit /b
 )
+
 if exist "%script_folder%\\PSDRexa.py" (
     echo delete old PSDRexa
     cd %script_folder%

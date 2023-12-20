@@ -10,7 +10,7 @@ class Syncer2(BaseSyncer):
     def _sync(self, task: SyncTask):
         audio_wav = [0.0] * task.video_item.GetDuration()
         for audio in task.sync_audio_clip_list:
-            with wave.open(os.path.join(self.audio_folder_path, audio.audio_item.GetName()), 'rb') as wav_file:
+            with wave.open(audio.audio_item.GetMediaPoolItem().GetClipProperty('File Path'), 'rb') as wav_file:
                 params = wav_file.getparams()
 
                 # このあたり某人工知能に聞いた

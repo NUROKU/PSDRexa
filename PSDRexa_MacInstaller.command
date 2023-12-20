@@ -33,25 +33,15 @@ else
     exit
 fi
 
-# if [ -d "$module_folder/PSDCharacterExporter" ]; then
-#     echo "delete old PSDCharacterExporter Directory."
-#     rm -rf "$module_folder/PSDCharacterExporter"
-# fi
-
 if [ -d "$module_folder/PSDRexa" ]; then
     echo "delete old PSDRexa Directory."
     rm -rf "$module_folder/PSDRexa"
 fi
 cp -R "$psdrexafolder" "$module_folder/PSDRexa"
 
-
 cd "$module_folder/PSDRexa"
 pip3 install -r requirements.txt --target module
 
-# if [ -f "$script_folder/PSDCharacterExporter.py" ]; then
-#     echo "delete old PSDCharacterExporter."
-#     rm "$script_folder/PSDCharacterExporter.py"
-# fi
 if [ -f "$script_folder/PSDRexa.py" ]; then
     echo "delete old PSDRexa."
     rm "$script_folder/PSDRexa.py"

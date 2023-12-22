@@ -6,7 +6,6 @@ import tkinter as tk
 from tkinter import messagebox
 
 
-
 class PSDRexaSyncerUI:
     def __init__(self, fu, bmd, resolve):
         self._resolve = resolve
@@ -42,6 +41,7 @@ class PSDRexaSyncerUI:
         self._dispatcher.ExitLoop()
 
     def StartSync2(self, ev):
+        self._window.Find('Result2Label').Text = f"Processing..."
         video_index = self._window.Find('VideoTrackInput').Value
         audio_index = self._window.Find('AudioTrackInput').Value
 
@@ -56,14 +56,21 @@ class PSDRexaSyncerUI:
         syncer = Syncer2(frame_rate=frame_rate)
 
         BaseSyncer.init_video_items(video_tracks)
-        syncer.sync_tasks(tasks)
+        result = syncer.sync_tasks(tasks)
+
+        if result:
+            message = "口パク設定が完了しました"
+        else:
+            message = "口パク設定が完了しましたが、一部のwavファイルの読み込みでエラーが発生しました。\n詳しくはDaVinci Resolveのコンソールを確認してください"
 
         root = tk.Tk()
         root.withdraw()
-        messagebox.showinfo("PSDRexa_Syncer", "口パク設定が完了しました")
+        messagebox.showinfo("PSDRexa_Syncer", message)
         root.destroy()
+        self._window.Find('Result2Label').Text = f"-"
 
     def StartSync1(self, ev):
+        self._window.Find('Result1Label').Text = f"Processing..."
         video_index = self._window.Find('VideoTrackInput').Value
         project_manager = self._resolve.GetProjectManager()
         project = project_manager.GetCurrentProject()
@@ -74,9 +81,15 @@ class PSDRexaSyncerUI:
         syncer = Syncer1(frame_rate=0)
 
         BaseSyncer.init_video_items(video_tracks)
-        syncer.sync_tasks(tasks)
+        result = syncer.sync_tasks(tasks)
+
+        if result:
+            message = "口パク設定が完了しました"
+        else:
+            message = "口パク設定が完了しましたが、一部のwavファイルの読み込みでエラーが発生しました。\n詳しくはDaVinci Resolveのコンソールを確認してください"
 
         root = tk.Tk()
         root.withdraw()
-        messagebox.showinfo("PSDRexa_Syncer", "目パチの再設定が完了しました")
+        messagebox.showinfo("PSDRexa_Syncer", message)
         root.destroy()
+        self._window.Find('Result1Label').Text = f"-"

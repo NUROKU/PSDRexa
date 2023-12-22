@@ -10,8 +10,16 @@ class BaseSyncer:
         return self._frame_rate
 
     def sync_tasks(self, tasks):
+        task_succeed_all = True
+        print("--Start PSDRexa Syncer task--")
         for task in tasks:
-            self._sync(task)
+            try:
+                self._sync(task)
+            except Exception as e:
+                task_succeed_all = False
+                print(e)
+        print("--End PSDRexa Syncer task--")
+        return task_succeed_all
 
     def _sync(self, task):
         raise NotImplementedError()

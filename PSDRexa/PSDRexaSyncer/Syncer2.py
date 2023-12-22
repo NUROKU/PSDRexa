@@ -9,24 +9,32 @@ from PSDRexaSyncer.SyncTask import SyncTask
 class Syncer2(BaseSyncer):
     def _sync(self, task: SyncTask):
         audio_wav = [0.0] * task.video_item.GetDuration()
+
         for audio in task.sync_audio_clip_list:
-            with wave.open(audio.audio_item.GetMediaPoolItem().GetClipProperty('File Path'), 'rb') as wav_file:
-                params = wav_file.getparams()
+            try:
+                audio_path = audio.audio_item.GetMediaPoolItem().GetClipProperty('File Path')
+            except:
+                raise Exception("[ERROR]wav file open failed " + audio.audio_item.GetMediaPoolItem().GetName())
+            with wave.open(audio_path, 'rb') as wav_file:
+                try:
+                    params = wav_file.getparams()
 
-                # このあたり某人工知能に聞いた
-                frames = wav_file.readframes(params.nframes)
-                unpacked_frames = struct.unpack('<' + 'h' * params.nframes, frames)
-                volumes = [abs(amplitude) for amplitude in unpacked_frames]
+                    # このあたり某人工知能に聞いた
+                    frames = wav_file.readframes(params.nframes)
+                    unpacked_frames = struct.unpack('<' + 'h' * params.nframes, frames)
+                    volumes = [abs(amplitude) for amplitude in unpacked_frames]
 
-                frame_length = params.framerate // self.frame_rate
-                frames_volumes = [sum(volumes[i:i + frame_length]) / frame_length for i in
-                                  range(0, len(volumes), frame_length)]
+                    frame_length = params.framerate // self.frame_rate
+                    frames_volumes = [sum(volumes[i:i + frame_length]) / frame_length for i in
+                                      range(0, len(volumes), frame_length)]
 
-                index = audio.start_diff
-                if audio.start_diff < 0:
-                    del frames_volumes[:abs(audio.start_diff)]
-                    index = 0
-                audio_wav[index:len(frames_volumes)] = frames_volumes
+                    index = audio.start_diff
+                    if audio.start_diff < 0:
+                        del frames_volumes[:abs(audio.start_diff)]
+                        index = 0
+                    audio_wav[index:len(frames_volumes)] = frames_volumes
+                except:
+                    raise Exception("[ERROR]wav file unpack failed " + audio.audio_item.GetMediaPoolItem().GetName())
 
         fusion_obj = task.video_item.GetFusionCompByIndex(1).FindTool("CustomTool1")
         fusion_obj.CurrentTime = 0

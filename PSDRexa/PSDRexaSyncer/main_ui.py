@@ -94,7 +94,7 @@ class PSDRexaSyncerUI:
             if result:
                 message = "目パチ設定が完了しました"
             else:
-                message = "目パチ設定が完了しましたが、一部のwavファイルの読み込みでエラーが発生しました。\n詳しくはDaVinci Resolveのコンソールを確認してください"
+                message = "目パチ設定が完了しましたが、一部エラーが発生しました。\n詳しくはDaVinci Resolveのコンソールを確認してください"
 
             root = tk.Tk()
             root.withdraw()
@@ -106,4 +106,4 @@ class PSDRexaSyncerUI:
             root.withdraw()
             messagebox.showinfo("PSDRexa_Syncer", f"ERROR:{str(e)}")
             root.destroy()
-            self._window.Find('Result2Label').Text = f"-"
+            self._window.Find('Result1Label').Text = f"-"

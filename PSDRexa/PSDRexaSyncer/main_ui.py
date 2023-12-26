@@ -41,55 +41,69 @@ class PSDRexaSyncerUI:
         self._dispatcher.ExitLoop()
 
     def StartSync2(self, ev):
-        self._window.Find('Result2Label').Text = f"Processing..."
-        video_index = self._window.Find('VideoTrackInput').Value
-        audio_index = self._window.Find('AudioTrackInput').Value
+        try:
+            self._window.Find('Result2Label').Text = f"Processing..."
+            video_index = self._window.Find('VideoTrackInput').Value
+            audio_index = self._window.Find('AudioTrackInput').Value
 
-        project_manager = self._resolve.GetProjectManager()
-        project = project_manager.GetCurrentProject()
-        timeline = project.GetCurrentTimeline()
-        video_tracks = timeline.GetItemListInTrack("video", video_index)
-        audio_tracks = timeline.GetItemListInTrack("audio", audio_index)
+            project_manager = self._resolve.GetProjectManager()
+            project = project_manager.GetCurrentProject()
+            timeline = project.GetCurrentTimeline()
+            video_tracks = timeline.GetItemListInTrack("video", video_index)
+            audio_tracks = timeline.GetItemListInTrack("audio", audio_index)
 
-        tasks = BaseSyncer.create_tasks(video_tracks, audio_tracks)
-        frame_rate = int(timeline.GetSetting('timelineFrameRate'))
-        syncer = Syncer2(frame_rate=frame_rate)
+            tasks = BaseSyncer.create_tasks(video_tracks, audio_tracks)
+            frame_rate = int(timeline.GetSetting('timelineFrameRate'))
+            syncer = Syncer2(frame_rate=frame_rate)
 
-        BaseSyncer.init_video_items(video_tracks)
-        result = syncer.sync_tasks(tasks)
+            BaseSyncer.init_video_items(video_tracks)
+            result = syncer.sync_tasks(tasks)
 
-        if result:
-            message = "口パク設定が完了しました"
-        else:
-            message = "口パク設定が完了しましたが、一部のwavファイルの読み込みでエラーが発生しました。\n詳しくはDaVinci Resolveのコンソールを確認してください"
+            if result:
+                message = "口パク設定が完了しました"
+            else:
+                message = "口パク設定が完了しましたが、一部のwavファイルの読み込みでエラーが発生しました。\n詳しくはDaVinci Resolveのコンソールを確認してください"
 
-        root = tk.Tk()
-        root.withdraw()
-        messagebox.showinfo("PSDRexa_Syncer", message)
-        root.destroy()
-        self._window.Find('Result2Label').Text = f"-"
+            root = tk.Tk()
+            root.withdraw()
+            messagebox.showinfo("PSDRexa_Syncer", message)
+            root.destroy()
+            self._window.Find('Result2Label').Text = f"-"
+        except Exception as e:
+            root = tk.Tk()
+            root.withdraw()
+            messagebox.showinfo("PSDRexa_Syncer", f"ERROR:{str(e)}")
+            root.destroy()
+            self._window.Find('Result2Label').Text = f"-"
 
     def StartSync1(self, ev):
-        self._window.Find('Result1Label').Text = f"Processing..."
-        video_index = self._window.Find('VideoTrackInput').Value
-        project_manager = self._resolve.GetProjectManager()
-        project = project_manager.GetCurrentProject()
-        timeline = project.GetCurrentTimeline()
-        video_tracks = timeline.GetItemListInTrack("video", video_index)
+        try:
+            self._window.Find('Result1Label').Text = f"Processing..."
+            video_index = self._window.Find('VideoTrackInput').Value
+            project_manager = self._resolve.GetProjectManager()
+            project = project_manager.GetCurrentProject()
+            timeline = project.GetCurrentTimeline()
+            video_tracks = timeline.GetItemListInTrack("video", video_index)
 
-        tasks = BaseSyncer.create_tasks(video_tracks, [])
-        syncer = Syncer1(frame_rate=0)
+            tasks = BaseSyncer.create_tasks(video_tracks, [])
+            syncer = Syncer1(frame_rate=0)
 
-        BaseSyncer.init_video_items(video_tracks)
-        result = syncer.sync_tasks(tasks)
+            BaseSyncer.init_video_items(video_tracks)
+            result = syncer.sync_tasks(tasks)
 
-        if result:
-            message = "口パク設定が完了しました"
-        else:
-            message = "口パク設定が完了しましたが、一部のwavファイルの読み込みでエラーが発生しました。\n詳しくはDaVinci Resolveのコンソールを確認してください"
+            if result:
+                message = "目パチ設定が完了しました"
+            else:
+                message = "目パチ設定が完了しましたが、一部のwavファイルの読み込みでエラーが発生しました。\n詳しくはDaVinci Resolveのコンソールを確認してください"
 
-        root = tk.Tk()
-        root.withdraw()
-        messagebox.showinfo("PSDRexa_Syncer", message)
-        root.destroy()
-        self._window.Find('Result1Label').Text = f"-"
+            root = tk.Tk()
+            root.withdraw()
+            messagebox.showinfo("PSDRexa_Syncer", message)
+            root.destroy()
+            self._window.Find('Result1Label').Text = f"-"
+        except Exception as e:
+            root = tk.Tk()
+            root.withdraw()
+            messagebox.showinfo("PSDRexa_Syncer", f"ERROR:{str(e)}")
+            root.destroy()
+            self._window.Find('Result2Label').Text = f"-"

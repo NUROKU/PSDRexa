@@ -13,5 +13,9 @@ class PsdDataStore:
         try:
             psd = PSDImage.open(psd_file_path, encoding="cp932")
         except Exception as e:
-            raise DataStoreError("psdファイルを読み込めませんでした。")
+            try:
+                psd = PSDImage.open(psd_file_path)
+                return psd
+            except Exception as e:
+                raise DataStoreError("psdファイルを読み込めませんでした。")
         return psd

@@ -10,9 +10,9 @@ PSD立ち絵素材をいい感じにDaVinciResolveで使えるようにするや
 
 # 必要動作環境
 - DaVinci Resolve 18.5以上  
-- Python 3.6以上
+- Python 3.6以上 3.12以下
 PythonはインストールしてDaVinciResolve上で使えるようにしておいてください  
-ワークスペース→コンソール→Py3を選択してエラーメッセージが出力されなければ使える環境になってます。  
+ワークスペース→コンソール→Py3を選択してエラーメッセージが出力されなければ使える環境になってます。
 [Pythonインストール手順はここから](./HowToInstall_Python.md)
 
 # 対応OS

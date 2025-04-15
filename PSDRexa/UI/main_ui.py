@@ -2,7 +2,7 @@ import os
 import platform
 import tkinter
 import tkinter as tk
-from tkinter import messagebox
+from tkinter import messagebox, ttk
 
 from Persenter.OutputCharacterPresenter import OutputCharacterPresenter
 from Persenter.SaveCompositedImagePersenter import SaveCompositedImagePersenter
@@ -72,12 +72,28 @@ class MainUI:
         canvas = CompositedImageCanvas(root, width=600, height=300)
         canvas.pack(side="right", fill="both", expand=True)
 
-        # 左半分チェックボックス付きのツリーを配置
-        tree = LayerTreeview(root, canvas=canvas, show='tree')
+        # 左半分チェックボックス付きのツリーを配置（スクロールバー付き）
+        tree_frame = tk.Frame(root)
+        tree_frame.pack(fill="both", expand=True)
+
+        # スクロールバー
+        y_scrollbar = ttk.Scrollbar(tree_frame, orient="vertical")
+        y_scrollbar.pack(side="right", fill="y")
+
+        x_scrollbar = ttk.Scrollbar(tree_frame, orient="horizontal")
+        x_scrollbar.pack(side="bottom", fill="x")
+
+        # LayerTreeviewを配置
+        tree = LayerTreeview(tree_frame, canvas=canvas, show='tree')
         tree.pack(fill="both", expand=True)
 
-        btn1 = tkinter.Button(root, text='出力', command=save, width=5)
-        btn1.pack(side="left", padx=5, pady=5, anchor=tk.N)
+        # Treeviewにスクロールバーを関連付ける
+        tree.configure(yscrollcommand=y_scrollbar.set, xscrollcommand=x_scrollbar.set)
+        y_scrollbar.configure(command=tree.yview)
+        x_scrollbar.configure(command=tree.xview)
+
+        btn1 = tkinter.Button(root, text='出力', command=save, width=6,height=2)
+        btn1.pack(side="left", padx=1, pady=1, anchor=tk.N)
 
         # SpinBoxの設定
         index_label = tk.Label(root, text="出力index:")

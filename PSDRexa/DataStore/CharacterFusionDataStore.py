@@ -5,7 +5,6 @@ from Service.SettingFileService import SettingFileService, SettingKeys
 
 
 # Fusionを作成してそこに画像をロードさせるやつ
-# InsertFusionCompositionIntoTimelineの挙動が気に入らなくて一旦没
 class CharacterFusionDataStore:
     def __init__(self):
         # self._resolve = ResolveService.get_resolve()
@@ -17,7 +16,9 @@ class CharacterFusionDataStore:
         FOLDER_NAME = "PSDRexa"
         TEMPLATE_NAME = "PSDRexaTemplate"
         # Timelineにfusion追加
-        project_manager = ResolveService.get_resolve().GetProjectManager()
+
+        resolve = ResolveService.get_resolve()
+        project_manager = resolve.GetProjectManager()
         project = project_manager.GetCurrentProject()
         media_pool = project.GetMediaPool()
         timeline = project.GetCurrentTimeline()
@@ -49,8 +50,8 @@ class CharacterFusionDataStore:
             'trackIndex': index,
             'recordFrame': max_right_offset
         }])
+        resolve.OpenPage("fusion")
         fusion_list = psdrexa_item[0].GetFusionCompByIndex(1).GetToolList()
-
         for f in fusion_list.values():
             if f.GetAttrs('TOOLS_Name') == "Loader_mouseopen":
                 f.Clip = str(kuchipaku_open)
@@ -62,6 +63,7 @@ class CharacterFusionDataStore:
                 f.Clip = str(mepachi_close)
             if f.GetAttrs('TOOLS_Name') == "Loader_sotai":
                 f.Clip = str(sotai)
+        resolve.OpenPage("edit")
 
         syncer = Syncer1(0)
         syncer.sync_tasks(tasks=[SyncTask(video_item=psdrexa_item[0], sync_audio_clip_list=[])])

@@ -78,6 +78,9 @@ class CompositedImage:
                     else:
                         self._not_ignored_list.append({"id": layer.id_name, "parent": layer.parent.id_name})
 
+                if layer.layer_image.image.width == 1 or layer.layer_image.image.height == 1:
+                    continue
+
                 if is_for_preview and SettingFileService.read_config(
                         SettingKeys.is_image_preview_size_original) is False:
                     offset = (int(layer.offset[0] * self._ratio), int(layer.offset[1] * self._ratio))

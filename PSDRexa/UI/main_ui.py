@@ -41,7 +41,7 @@ class MainUI:
             self.setting_window.execute()
 
         # initだしここでもいいのかな、いや別にすべきでは・・・？
-        PSDRexaTemplateService.init_template()
+        # PSDRexaTemplateService.init_template()
         # messagebox.showerror("error", "DaVinci Resolveの読み込みに失敗しました")
 
         root = tk.Tk()
